@@ -5,4 +5,4 @@ menu:
   - {name: 'About', url: '/about.html'}
   - {name: 'Meetup', url: 'https://www.meetup.com/BitDevsNYC/', external: true}
   - {name: 'Twitter', url: 'https://twitter.com/sgbitdevs',external: true}
-  - {name: 'Telegram', url: 'https://t.me/sgbitdevs',external:true}
+  - {name: 'Telegram', url: 'https://t.me/sgbitdevs',external: true}
