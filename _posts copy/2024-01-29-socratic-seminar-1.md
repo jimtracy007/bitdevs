@@ -1,0 +1,76 @@
+---
+layout: post
+type: socratic
+title: "Socratic Seminar 1"
+meetup: "https://www.meetup.com/bitdevs-sg/events/298650454/"
+---
+
+Join our Telegram Group:
+
+[TelegramQR](https://i.ibb.co/2d4ncjx/Telegram-QR.png)
+
+We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.
+# Announcements
+-   No pictures or recordings
+-   Thank you [OGBC](https://www.ogbc.com/) for sponsorship of the event space
+-   Introductions
+# Agenda
+- [[Lightning Network (from Bitcoin University)]] - Darius
+- Taproot Assets Protocol - Luke
+- Bitcoin News
+- Opening Address - BitDevs NYC Founder
+
+# Bitcoin
+#### [Scaling Lightning Safely With Feerate-Dependent Timelocks](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-December/022191.html)
+- All known Lightning channel and factory protocols are susceptible to forced expiration spam attacks, in which an attacker floods the blockchain with transactions in order to prevent honest users from putting their transactions onchain before timelocks expire.
+* Feerate-Dependent Timelocks (FDTs) are timelocks that automatically extend when blockchain feerates spike.
+  - In the normal case, there's no spike in feerates and thus no tradeoff between capital efficiency and safety.
+  - If a dishonest user attempts a forced expiration spam attack, feerates increase and FDTs are extended, thus penalizing the attacker by keeping their capital timelocked for longer.
+  - FDTs are tunable and can be made to be highly resistant to attacks from dishonest miners.
+* Of separate interest, an exact analysis of the risk of double spend attacks is presented that corrects an error in the original Bitcoin whitepaper.
+
+#### [Addressing the possibility of profitable fee manipulation attacks](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-December/022195.html)
+- The article considers "the possibility that such patterns could be indicative of ongoing fee manipulation by either a large miner or a consortium of miners, and whether such manipulation could be practically profitable, even with a minority hashrate.  While miners have always had the ability to pad their own blocks with junk transactions, it seems to be generally assumed that at the very least there would be an opportunity cost of doing so, and that it would therefore would be unprofitable."
+- "during periods of low mempool influx like early mornings on weekends, there tends to be large bursts (often several hundred kvB worth) of tiny ordinals/BRC-20 transactions with a single dust UTXO broadcast right after each block is found, with a fee set moderately higher than the current average of the top of the mempool, which makes it highly likely that this is done by a single actor."
+- "Simply put, and trivially, such an attack would be profitable if the net fees the participating miners spend on fee-stuffing transactions is less than the increase in fees the participating miners can collect from "real" transactions."
+
+# Lightning
+
+#### Rethinking Lightning
+[Ben Carman](https://stacker.news/benthecarman) wrote a thorough and realistic [stacker news post](https://stacker.news/items/379225) examining the shortcomings of the lightning network. 
+- Two key problems: offline receiving and channel liquidity
+- **Channel liquidity: **when a payment is being made in lightning you are creating pre-signed transactions that have outputs for every in-flight payment, these outputs cost potential on-chain fees and the high on-chain fees go the more it eats into your liquidity.
+- Carman explains that the fundamental scaling problem with lightning is that it only scales payments but not UTXO ownership. We can work around the edges of this problem with various federated solutions like fedimint or Liquid but in order to scale self-sovereign bitcoin access to the masses of humanity we will need better tools for shared UTXO ownership. Those tools are broadly categorized as covenants.
+- "So how do we scale ownership? Simply put, the answer today is custody, whether that is pure custodial like a Wallet of Satoshi or in the grey area like fedimints and liquid, the only way to do it today is through custody or federated bridges. In bitcoin, the only way to delegate ownership of a utxo to multiple parties is through multisig, however, that requires every user to be online when anyone wants to transact, and when you take go down this path far enough you end up just reinventing lightning."
+- "Are we doomed then? Is there no way to scale bitcoin in a self-sovereign way? Luckily, the answer is no, but we need some soft-forks. Covenants are the way to scale bitcoin ownership. There are a bunch of covenant proposals but at their core what they propose to do is to add a way, so you can have a bitcoin address that limits where and how the coins in it can be spent. This can seem scary, but we already have these in bitcoin today, OP_CTLV (Check LockTime Verify), which was soft forked in 2016, only allows you to spend from a bitcoin address if the transaction has a given locktime, this lets you gate when a utxo can be spent. What the current covenant proposals do is let you gate where a utxo can be spent. With that simple primitive many different protocols can be built that allow for scaling ownership."
+- Covenants are a category of proposed changes to Bitcoin’s consensus rules that would allow a script to prevent an authorized spender from spending to certain other scripts. For example, a covenant may normally only allow spending to a whitelisted set of scripts, such as returning bitcoins to the user’s own balance or spending to a staging address that only allows spending to any arbitrary address after a period of time.
+
+# Inscriptions
+
+#### Precursive Inscriptions: A Bitcoin-native Private Publishing Mechanism
+
+- Another [inscription whitepaper drop](https://www.ord.io/54024385) describing a [novel technique](https://github.com/4de67a207019fd4d855ef0a188b4519c/Precursive-Inscriptions/blob/main/Precursive%20Inscriptions%20-%20A%20Bitcoin-native%20Private%20Publishing%20Mechanism.pdf) to upload encrypted files to the bitcoin blockchain using recursive inscriptions. The file can be broken up into multiple chunks spread across multiple bitcoin blocks and decrypted once the corresponding private key is revealed in a later transaction. This technique can be used in combination with a timelock to create a dead man’s switch. 
+- Precursive inscriptions aim to create the private, encrypted publishing of data spread out over multiple Bitcoin blocks that can be published at a whim via a recursive publishing transaction containing the private key to decrypt the previously inscribed data. For instance, a collective of whistleblowers could discreetly upload data to the Bitcoin blockchain, unbeknownst to miners or node runners, while deferring its publication until a preferred moment. This very mechanism could implement a time-locked bitcoin transaction for this publishing transaction, acting as a dead man's switch. 
+- The primary objective of this proposal is to enhance the security and privacy of data stored on the Bitcoin blockchain, while also mitigating the risk of premature disclosure. One of the most significant advantages of this approach is its ability to ensure that the content remains concealed until the user decides to reveal it. This process not only provides data security but also maintains data integrity and permanence within the Bitcoin blockchain. Furthermore, the time-lock feature of the publishing transaction effectively creates a "dead man's switch”. This feature is particularly valuable for scenarios where data must remain confidential until specific conditions are met or in situations where data must be automatically released in the absence of user intervention. The precursive inscription process offers a robust solution to the challenges associated with data publishing on the Bitcoin blockchain, enhancing data security, privacy, and censorship resistance, while also providing users with the flexibility to control when and how their data is revealed.
+#### Quantum Cats
+
+In a totally unrelated development [some other guy](https://twitter.com/rot13maxi/status/1745983083608789345) details the technical design enabling a collection of evolving inscriptions called Quantum Cats.
+
+# Statistics
+- [53M inscriptions stored in the Bitcoin blockchain in 2023 (5,327BTC in fees)](https://twitter.com/jratcliff/status/1741897232692158480)
+- [Ordinal-style PSBT trades consuming blockspace](https://twitter.com/mononautical/status/1734999756789739949)
+- [ARC20 “QUARK” token](https://twitter.com/mononautical/status/1741161690836684986)
+- [hgp rune token flooding mempool](https://twitter.com/mononautical/status/1744422005028368778)
+- 
+# Miscellaneous
+-   [Fedimint v0.2.1](https://github.com/fedimint/fedimint/releases/tag/v0.2.1) released. This is the first release that will have long term support.
+-   [Someone sent ~27 BTC to Satoshi’s first pubkey](https://twitter.com/mononautical/status/1743391496827473925)
+-   [BIP Land](https://www.quantumcats.xyz/bip-land) is a flippant examination of the process of getting a bitcoin consensus change activated on the network.
+-   [Overview of Cluster Mempool](https://delvingbitcoin.org/t/an-overview-of-the-cluster-mempool-proposal/393/1)
+-   [Braidpool](https://github.com/braidpool/braidpool/blob/main/docs/braidpool_spec.md)
+-   [covenants.info](https://covenants.info/) cool site comparing the many covenant proposals. There seem to be some [open](https://twitter.com/Polyd_/status/1746575634170613824) [questions](https://twitter.com/brian_trollz/status/1746573443393273950) about the veracity of the information contained therein.
+-   [Bitcointalk thread](https://bitcointalk.org/index.php?topic=2162.0) discussing the introduction of ‘standardness’ rules and the (de)merits of storing data on the blockchain
+- ### Aqua Wallet - Lightning - Liquid Wallet. Aqua Wallet, 
+	- developed by Jan3, is a non-custodial mobile Bitcoin, Lightning, Liquid and Tether USDT (on Liquid, Ethereum, and Tron) wallet. Available on Android (APK only for now) and iOS. [Website](https://aquawallet.io/)[Announcement](https://twitter.com/JAN3com/status/1742758563271881132) [Blogpost](https://jan3.com/blog/surf-the-bitcoin-revolution-with-aqua/)
+- ### Primal Nostr client offers Lightning Wallet with Apple Pay Top ups ###
+	- Primal is a Nostr client that works on Web, iOS, Android. Great explore feature. Offers a Zap-enabled lightning wallet which can hold up to 1.5million satoshis with a US$15/day buy limit. Apple Pay charges an additional fee to buy Bitcoin in this way.
