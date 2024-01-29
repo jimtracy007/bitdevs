@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>
+    
+      Socratic Seminar 1 | BitDevs NYC3
+    
+  </title>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+
+  <!-- <script type="text/javascript" src="/assets/js/script.js" async></script> -->
+
+  <!-- Use Atom -->
+  <link type="application/atom+xml" rel="alternate" href="/feed.xml" title="BitDevs NYC" />
+
+  <!-- Use Jekyll SEO plugin -->
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Socratic Seminar 1 | BitDevs NYC</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Socratic Seminar 1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Join our Telegram Group:" />
+<meta property="og:description" content="Join our Telegram Group:" />
+<meta property="og:site_name" content="BitDevs NYC" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-01-29T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Socratic Seminar 1" />
+<script type="application/ld+json">
+{"url":"/2024-01-29-socratic-seminar-1.html","description":"Join our Telegram Group:","@type":"BlogPosting","headline":"Socratic Seminar 1","dateModified":"2024-01-29T00:00:00+08:00","datePublished":"2024-01-29T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"/2024-01-29-socratic-seminar-1.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+</head>
+
+
+<body>
+
+  <div class="Site">
+
+    <header class="Header">
+  <div class="Header-inner">
+    <div class="Header-logo">
+      <a href="/">BitDevs NYC3</a>
+    </div>
+    <nav class="Header-nav">
+      
+        
+          <a href="/about.html">About</a>
+        
+      
+        
+          <a href="/events.html">Events</a>
+        
+      
+        
+          <a href="/blog.html">Blog</a>
+        
+      
+        
+        <a href="https://www.meetup.com/BitDevsNYC/" target="_blank" rel="noopener nofollow">
+            Meetup
+        </a>
+        
+      
+        
+          <a href="/cities.html">Cities</a>
+        
+      
+    </nav>
+  </div>
+  <div class="Header-border">
+    ==============================================================================================================================================================
+  </div>
+</header>
+
+
+    <section>
+  <div class="Post">
+    <h1 class="Post-title">Socratic Seminar 1</h1>
+    <div class="Post-info">
+      <span>29 Jan 2024</span>
+      
+        <span>
+          <a href="https://www.meetup.com/bitdevs-sg/events/298650454/" target="_blank" rel="noopener nofollow">
+            Link to Meetup
+          </a>
+        </span>
+      
+    </div>
+    <div class="Post-content"><p>Join our Telegram Group:</p>
+
+<p><a href="https://i.ibb.co/2d4ncjx/Telegram-QR.png">TelegramQR</a></p>
+
+<p>We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.</p>
+<h1 id="announcements">Announcements</h1>
+<ul>
+  <li>No pictures or recordings</li>
+  <li>Thank you <a href="https://www.ogbc.com/">OGBC</a> for sponsorship of the event space</li>
+  <li>Introductions
+    <h1 id="agenda">Agenda</h1>
+  </li>
+  <li>[[Lightning Network (from Bitcoin University)]] - Darius</li>
+  <li>Taproot Assets Protocol - Luke</li>
+  <li>Bitcoin News</li>
+  <li>Opening Address - BitDevs NYC Founder</li>
+</ul>
+
+<h1 id="bitcoin">Bitcoin</h1>
+<h4 id="scaling-lightning-safely-with-feerate-dependent-timelocks"><a href="https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-December/022191.html">Scaling Lightning Safely With Feerate-Dependent Timelocks</a></h4>
+<ul>
+  <li>All known Lightning channel and factory protocols are susceptible to forced expiration spam attacks, in which an attacker floods the blockchain with transactions in order to prevent honest users from putting their transactions onchain before timelocks expire.</li>
+  <li>Feerate-Dependent Timelocks (FDTs) are timelocks that automatically extend when blockchain feerates spike.
+    <ul>
+      <li>In the normal case, there’s no spike in feerates and thus no tradeoff between capital efficiency and safety.</li>
+      <li>If a dishonest user attempts a forced expiration spam attack, feerates increase and FDTs are extended, thus penalizing the attacker by keeping their capital timelocked for longer.</li>
+      <li>FDTs are tunable and can be made to be highly resistant to attacks from dishonest miners.</li>
+    </ul>
+  </li>
+  <li>Of separate interest, an exact analysis of the risk of double spend attacks is presented that corrects an error in the original Bitcoin whitepaper.</li>
+</ul>
+
+<h4 id="addressing-the-possibility-of-profitable-fee-manipulation-attacks"><a href="https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-December/022195.html">Addressing the possibility of profitable fee manipulation attacks</a></h4>
+<ul>
+  <li>The article considers “the possibility that such patterns could be indicative of ongoing fee manipulation by either a large miner or a consortium of miners, and whether such manipulation could be practically profitable, even with a minority hashrate.  While miners have always had the ability to pad their own blocks with junk transactions, it seems to be generally assumed that at the very least there would be an opportunity cost of doing so, and that it would therefore would be unprofitable.”</li>
+  <li>“during periods of low mempool influx like early mornings on weekends, there tends to be large bursts (often several hundred kvB worth) of tiny ordinals/BRC-20 transactions with a single dust UTXO broadcast right after each block is found, with a fee set moderately higher than the current average of the top of the mempool, which makes it highly likely that this is done by a single actor.”</li>
+  <li>“Simply put, and trivially, such an attack would be profitable if the net fees the participating miners spend on fee-stuffing transactions is less than the increase in fees the participating miners can collect from “real” transactions.”</li>
+</ul>
+
+<h1 id="lightning">Lightning</h1>
+
+<h4 id="rethinking-lightning">Rethinking Lightning</h4>
+<p><a href="https://stacker.news/benthecarman">Ben Carman</a> wrote a thorough and realistic <a href="https://stacker.news/items/379225">stacker news post</a> examining the shortcomings of the lightning network.</p>
+<ul>
+  <li>Two key problems: offline receiving and channel liquidity</li>
+  <li>**Channel liquidity: **when a payment is being made in lightning you are creating pre-signed transactions that have outputs for every in-flight payment, these outputs cost potential on-chain fees and the high on-chain fees go the more it eats into your liquidity.</li>
+  <li>Carman explains that the fundamental scaling problem with lightning is that it only scales payments but not UTXO ownership. We can work around the edges of this problem with various federated solutions like fedimint or Liquid but in order to scale self-sovereign bitcoin access to the masses of humanity we will need better tools for shared UTXO ownership. Those tools are broadly categorized as covenants.</li>
+  <li>“So how do we scale ownership? Simply put, the answer today is custody, whether that is pure custodial like a Wallet of Satoshi or in the grey area like fedimints and liquid, the only way to do it today is through custody or federated bridges. In bitcoin, the only way to delegate ownership of a utxo to multiple parties is through multisig, however, that requires every user to be online when anyone wants to transact, and when you take go down this path far enough you end up just reinventing lightning.”</li>
+  <li>“Are we doomed then? Is there no way to scale bitcoin in a self-sovereign way? Luckily, the answer is no, but we need some soft-forks. Covenants are the way to scale bitcoin ownership. There are a bunch of covenant proposals but at their core what they propose to do is to add a way, so you can have a bitcoin address that limits where and how the coins in it can be spent. This can seem scary, but we already have these in bitcoin today, OP_CTLV (Check LockTime Verify), which was soft forked in 2016, only allows you to spend from a bitcoin address if the transaction has a given locktime, this lets you gate when a utxo can be spent. What the current covenant proposals do is let you gate where a utxo can be spent. With that simple primitive many different protocols can be built that allow for scaling ownership.”</li>
+  <li>Covenants are a category of proposed changes to Bitcoin’s consensus rules that would allow a script to prevent an authorized spender from spending to certain other scripts. For example, a covenant may normally only allow spending to a whitelisted set of scripts, such as returning bitcoins to the user’s own balance or spending to a staging address that only allows spending to any arbitrary address after a period of time.</li>
+</ul>
+
+<h1 id="inscriptions">Inscriptions</h1>
+
+<h4 id="precursive-inscriptions-a-bitcoin-native-private-publishing-mechanism">Precursive Inscriptions: A Bitcoin-native Private Publishing Mechanism</h4>
+
+<ul>
+  <li>Another <a href="https://www.ord.io/54024385">inscription whitepaper drop</a> describing a <a href="https://github.com/4de67a207019fd4d855ef0a188b4519c/Precursive-Inscriptions/blob/main/Precursive%20Inscriptions%20-%20A%20Bitcoin-native%20Private%20Publishing%20Mechanism.pdf">novel technique</a> to upload encrypted files to the bitcoin blockchain using recursive inscriptions. The file can be broken up into multiple chunks spread across multiple bitcoin blocks and decrypted once the corresponding private key is revealed in a later transaction. This technique can be used in combination with a timelock to create a dead man’s switch.</li>
+  <li>Precursive inscriptions aim to create the private, encrypted publishing of data spread out over multiple Bitcoin blocks that can be published at a whim via a recursive publishing transaction containing the private key to decrypt the previously inscribed data. For instance, a collective of whistleblowers could discreetly upload data to the Bitcoin blockchain, unbeknownst to miners or node runners, while deferring its publication until a preferred moment. This very mechanism could implement a time-locked bitcoin transaction for this publishing transaction, acting as a dead man’s switch.</li>
+  <li>The primary objective of this proposal is to enhance the security and privacy of data stored on the Bitcoin blockchain, while also mitigating the risk of premature disclosure. One of the most significant advantages of this approach is its ability to ensure that the content remains concealed until the user decides to reveal it. This process not only provides data security but also maintains data integrity and permanence within the Bitcoin blockchain. Furthermore, the time-lock feature of the publishing transaction effectively creates a “dead man’s switch”. This feature is particularly valuable for scenarios where data must remain confidential until specific conditions are met or in situations where data must be automatically released in the absence of user intervention. The precursive inscription process offers a robust solution to the challenges associated with data publishing on the Bitcoin blockchain, enhancing data security, privacy, and censorship resistance, while also providing users with the flexibility to control when and how their data is revealed.
+    <h4 id="quantum-cats">Quantum Cats</h4>
+  </li>
+</ul>
+
+<p>In a totally unrelated development <a href="https://twitter.com/rot13maxi/status/1745983083608789345">some other guy</a> details the technical design enabling a collection of evolving inscriptions called Quantum Cats.</p>
+
+<h1 id="statistics">Statistics</h1>
+<ul>
+  <li><a href="https://twitter.com/jratcliff/status/1741897232692158480">53M inscriptions stored in the Bitcoin blockchain in 2023 (5,327BTC in fees)</a></li>
+  <li><a href="https://twitter.com/mononautical/status/1734999756789739949">Ordinal-style PSBT trades consuming blockspace</a></li>
+  <li><a href="https://twitter.com/mononautical/status/1741161690836684986">ARC20 “QUARK” token</a></li>
+  <li><a href="https://twitter.com/mononautical/status/1744422005028368778">hgp rune token flooding mempool</a></li>
+  <li>
+    <h1 id="miscellaneous">Miscellaneous</h1>
+  </li>
+  <li><a href="https://github.com/fedimint/fedimint/releases/tag/v0.2.1">Fedimint v0.2.1</a> released. This is the first release that will have long term support.</li>
+  <li><a href="https://twitter.com/mononautical/status/1743391496827473925">Someone sent ~27 BTC to Satoshi’s first pubkey</a></li>
+  <li><a href="https://www.quantumcats.xyz/bip-land">BIP Land</a> is a flippant examination of the process of getting a bitcoin consensus change activated on the network.</li>
+  <li><a href="https://delvingbitcoin.org/t/an-overview-of-the-cluster-mempool-proposal/393/1">Overview of Cluster Mempool</a></li>
+  <li><a href="https://github.com/braidpool/braidpool/blob/main/docs/braidpool_spec.md">Braidpool</a></li>
+  <li><a href="https://covenants.info/">covenants.info</a> cool site comparing the many covenant proposals. There seem to be some <a href="https://twitter.com/Polyd_/status/1746575634170613824">open</a> <a href="https://twitter.com/brian_trollz/status/1746573443393273950">questions</a> about the veracity of the information contained therein.</li>
+  <li><a href="https://bitcointalk.org/index.php?topic=2162.0">Bitcointalk thread</a> discussing the introduction of ‘standardness’ rules and the (de)merits of storing data on the blockchain</li>
+  <li>
+    <h3 id="aqua-wallet---lightning---liquid-wallet-aqua-wallet">Aqua Wallet - Lightning - Liquid Wallet. Aqua Wallet,</h3>
+    <ul>
+      <li>developed by Jan3, is a non-custodial mobile Bitcoin, Lightning, Liquid and Tether USDT (on Liquid, Ethereum, and Tron) wallet. Available on Android (APK only for now) and iOS. <a href="https://aquawallet.io/">Website</a><a href="https://twitter.com/JAN3com/status/1742758563271881132">Announcement</a> <a href="https://jan3.com/blog/surf-the-bitcoin-revolution-with-aqua/">Blogpost</a></li>
+    </ul>
+  </li>
+  <li>
+    <h3 id="primal-nostr-client-offers-lightning-wallet-with-apple-pay-top-ups">Primal Nostr client offers Lightning Wallet with Apple Pay Top ups</h3>
+    <ul>
+      <li>Primal is a Nostr client that works on Web, iOS, Android. Great explore feature. Offers a Zap-enabled lightning wallet which can hold up to 1.5million satoshis with a US$15/day buy limit. Apple Pay charges an additional fee to buy Bitcoin in this way.</li>
+    </ul>
+  </li>
+</ul>
+</div>
+  </div>
+</section>
+
+
+    <footer class="Footer">
+  <div class="Footer-border">
+    ==============================================================================================================================================================
+  </div>
+  <div class="Footer-inner">
+    <div class="Footer-source">
+      <a href="https://github.com/BitDevsNYC/BitDevsNYC.github.io" target="_blank" rel="noopener nofollow">Source available on Github</a>
+    </div>
+    <div class="Footer-rss">
+      <a href="/feed.xml">RSS Feed</a>
+    </div>
+  </div>
+</footer>
+
+
+  <div>
+
+</body>
+
+</html>

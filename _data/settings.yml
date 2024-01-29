@@ -1,0 +1,9 @@
+title: 'BitDevs NYC3'
+tagline: 'BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.'
+
+menu:
+  - {name: 'About', url: '/about.html'}
+  - {name: 'Events', url: '/events.html'}
+  - {name: 'Blog', url: '/blog.html'}
+  - {name: 'Meetup', url: 'https://www.meetup.com/BitDevsNYC/', external: true}
+  - {name: 'Cities', url: '/cities.html'}
