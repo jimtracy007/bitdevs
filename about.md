@@ -24,9 +24,9 @@ descriptions of past meetups. The discussion portion of the event is NEVER
 recorded. It is recommended that you have a firm grasp of the basics of Bitcoin
 in order to extract the most value from our Socratic events.
 
-Please contact the organizers if you'd like to present at a future Socratic
+<!-- Please contact the organizers if you'd like to present at a future Socratic
 event or have a recommended topic for discussion: []. There
 are different requirements for presentations depending on the nature of the
-project.
+project. -->
 
 
