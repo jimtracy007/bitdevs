@@ -61,7 +61,6 @@ In a totally unrelated development [some other guy](https://twitter.com/rot13max
 - [Ordinal-style PSBT trades consuming blockspace](https://twitter.com/mononautical/status/1734999756789739949)
 - [ARC20 “QUARK” token](https://twitter.com/mononautical/status/1741161690836684986)
 - [hgp rune token flooding mempool](https://twitter.com/mononautical/status/1744422005028368778)
-- 
 # Miscellaneous
 -   [Fedimint v0.2.1](https://github.com/fedimint/fedimint/releases/tag/v0.2.1) released. This is the first release that will have long term support.
 -   [Someone sent ~27 BTC to Satoshi’s first pubkey](https://twitter.com/mononautical/status/1743391496827473925)
@@ -70,7 +69,7 @@ In a totally unrelated development [some other guy](https://twitter.com/rot13max
 -   [Braidpool](https://github.com/braidpool/braidpool/blob/main/docs/braidpool_spec.md)
 -   [covenants.info](https://covenants.info/) cool site comparing the many covenant proposals. There seem to be some [open](https://twitter.com/Polyd_/status/1746575634170613824) [questions](https://twitter.com/brian_trollz/status/1746573443393273950) about the veracity of the information contained therein.
 -   [Bitcointalk thread](https://bitcointalk.org/index.php?topic=2162.0) discussing the introduction of ‘standardness’ rules and the (de)merits of storing data on the blockchain
-- ### Aqua Wallet - Lightning - Liquid Wallet. Aqua Wallet, 
+### Aqua Wallet - Lightning - Liquid Wallet. Aqua Wallet, 
 	- developed by Jan3, is a non-custodial mobile Bitcoin, Lightning, Liquid and Tether USDT (on Liquid, Ethereum, and Tron) wallet. Available on Android (APK only for now) and iOS. [Website](https://aquawallet.io/)[Announcement](https://twitter.com/JAN3com/status/1742758563271881132) [Blogpost](https://jan3.com/blog/surf-the-bitcoin-revolution-with-aqua/)
-- ### Primal Nostr client offers Lightning Wallet with Apple Pay Top ups ###
+### Primal Nostr client offers Lightning Wallet with Apple Pay Top ups ###
 	- Primal is a Nostr client that works on Web, iOS, Android. Great explore feature. Offers a Zap-enabled lightning wallet which can hold up to 1.5million satoshis with a US$15/day buy limit. Apple Pay charges an additional fee to buy Bitcoin in this way.

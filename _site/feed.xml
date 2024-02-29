@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-01-29T14:45:24+08:00</updated><id>/feed.xml</id><title type="html">Bitdevs SG</title><subtitle>BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.</subtitle><entry><title type="html">Socratic Seminar 1</title><link href="/2024-01-29-socratic-seminar-1.html" rel="alternate" type="text/html" title="Socratic Seminar 1" /><published>2024-01-29T00:00:00+08:00</published><updated>2024-01-29T00:00:00+08:00</updated><id>/socratic-seminar-1</id><content type="html" xml:base="/2024-01-29-socratic-seminar-1.html">&lt;p&gt;Join our Telegram Group:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-02-29T15:54:33+08:00</updated><id>/feed.xml</id><title type="html">Bitdevs SG</title><subtitle>BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.</subtitle><entry><title type="html">Socratic Seminar 1</title><link href="/2024-01-29-socratic-seminar-1.html" rel="alternate" type="text/html" title="Socratic Seminar 1" /><published>2024-01-29T00:00:00+08:00</published><updated>2024-01-29T00:00:00+08:00</updated><id>/socratic-seminar-1</id><content type="html" xml:base="/2024-01-29-socratic-seminar-1.html">&lt;p&gt;Join our Telegram Group:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://i.ibb.co/2d4ncjx/Telegram-QR.png&quot;&gt;TelegramQR&lt;/a&gt;&lt;/p&gt;
 
@@ -69,8 +69,7 @@
   &lt;li&gt;&lt;a href=&quot;https://twitter.com/jratcliff/status/1741897232692158480&quot;&gt;53M inscriptions stored in the Bitcoin blockchain in 2023 (5,327BTC in fees)&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://twitter.com/mononautical/status/1734999756789739949&quot;&gt;Ordinal-style PSBT trades consuming blockspace&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://twitter.com/mononautical/status/1741161690836684986&quot;&gt;ARC20 “QUARK” token&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://twitter.com/mononautical/status/1744422005028368778&quot;&gt;hgp rune token flooding mempool&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://twitter.com/mononautical/status/1744422005028368778&quot;&gt;hgp rune token flooding mempool&lt;/a&gt;
     &lt;h1 id=&quot;miscellaneous&quot;&gt;Miscellaneous&lt;/h1&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/fedimint/fedimint/releases/tag/v0.2.1&quot;&gt;Fedimint v0.2.1&lt;/a&gt; released. This is the first release that will have long term support.&lt;/li&gt;
@@ -79,16 +78,12 @@
   &lt;li&gt;&lt;a href=&quot;https://delvingbitcoin.org/t/an-overview-of-the-cluster-mempool-proposal/393/1&quot;&gt;Overview of Cluster Mempool&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/braidpool/braidpool/blob/main/docs/braidpool_spec.md&quot;&gt;Braidpool&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://covenants.info/&quot;&gt;covenants.info&lt;/a&gt; cool site comparing the many covenant proposals. There seem to be some &lt;a href=&quot;https://twitter.com/Polyd_/status/1746575634170613824&quot;&gt;open&lt;/a&gt; &lt;a href=&quot;https://twitter.com/brian_trollz/status/1746573443393273950&quot;&gt;questions&lt;/a&gt; about the veracity of the information contained therein.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://bitcointalk.org/index.php?topic=2162.0&quot;&gt;Bitcointalk thread&lt;/a&gt; discussing the introduction of ‘standardness’ rules and the (de)merits of storing data on the blockchain&lt;/li&gt;
-  &lt;li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://bitcointalk.org/index.php?topic=2162.0&quot;&gt;Bitcointalk thread&lt;/a&gt; discussing the introduction of ‘standardness’ rules and the (de)merits of storing data on the blockchain
     &lt;h3 id=&quot;aqua-wallet---lightning---liquid-wallet-aqua-wallet&quot;&gt;Aqua Wallet - Lightning - Liquid Wallet. Aqua Wallet,&lt;/h3&gt;
     &lt;ul&gt;
-      &lt;li&gt;developed by Jan3, is a non-custodial mobile Bitcoin, Lightning, Liquid and Tether USDT (on Liquid, Ethereum, and Tron) wallet. Available on Android (APK only for now) and iOS. &lt;a href=&quot;https://aquawallet.io/&quot;&gt;Website&lt;/a&gt;&lt;a href=&quot;https://twitter.com/JAN3com/status/1742758563271881132&quot;&gt;Announcement&lt;/a&gt; &lt;a href=&quot;https://jan3.com/blog/surf-the-bitcoin-revolution-with-aqua/&quot;&gt;Blogpost&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h3 id=&quot;primal-nostr-client-offers-lightning-wallet-with-apple-pay-top-ups&quot;&gt;Primal Nostr client offers Lightning Wallet with Apple Pay Top ups&lt;/h3&gt;
-    &lt;ul&gt;
+      &lt;li&gt;developed by Jan3, is a non-custodial mobile Bitcoin, Lightning, Liquid and Tether USDT (on Liquid, Ethereum, and Tron) wallet. Available on Android (APK only for now) and iOS. &lt;a href=&quot;https://aquawallet.io/&quot;&gt;Website&lt;/a&gt;&lt;a href=&quot;https://twitter.com/JAN3com/status/1742758563271881132&quot;&gt;Announcement&lt;/a&gt; &lt;a href=&quot;https://jan3.com/blog/surf-the-bitcoin-revolution-with-aqua/&quot;&gt;Blogpost&lt;/a&gt;
+        &lt;h3 id=&quot;primal-nostr-client-offers-lightning-wallet-with-apple-pay-top-ups&quot;&gt;Primal Nostr client offers Lightning Wallet with Apple Pay Top ups&lt;/h3&gt;
+      &lt;/li&gt;
       &lt;li&gt;Primal is a Nostr client that works on Web, iOS, Android. Great explore feature. Offers a Zap-enabled lightning wallet which can hold up to 1.5million satoshis with a US$15/day buy limit. Apple Pay charges an additional fee to buy Bitcoin in this way.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
