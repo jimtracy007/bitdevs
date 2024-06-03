@@ -1,4 +1,359 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-02-29T16:00:48+08:00</updated><id>/feed.xml</id><title type="html">Bitdevs SG</title><subtitle>BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.</subtitle><entry><title type="html">Socratic Seminar 1</title><link href="/2024-01-29-socratic-seminar-1.html" rel="alternate" type="text/html" title="Socratic Seminar 1" /><published>2024-01-29T00:00:00+08:00</published><updated>2024-01-29T00:00:00+08:00</updated><id>/socratic-seminar-1</id><content type="html" xml:base="/2024-01-29-socratic-seminar-1.html">&lt;p&gt;Join our Telegram Group:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-06-03T18:37:17+08:00</updated><id>/feed.xml</id><title type="html">Bitdevs SG</title><subtitle>BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.</subtitle><entry><title type="html">Socratic Seminar 3</title><link href="/2024-05-31-socratic-seminar-3.html" rel="alternate" type="text/html" title="Socratic Seminar 3" /><published>2024-05-31T00:00:00+08:00</published><updated>2024-05-31T00:00:00+08:00</updated><id>/socratic-seminar-3</id><content type="html" xml:base="/2024-05-31-socratic-seminar-3.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+&lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;No pictures or recordings&lt;/li&gt;
+  &lt;li&gt;Thank you &lt;a href=&quot;https://www.ogbc.com/&quot;&gt;OGBC&lt;/a&gt; and &lt;a href=&quot;https://www.lnfi.network&quot;&gt;Lnfi Network&lt;/a&gt; for sponsorship of the event space and pizzas&lt;/li&gt;
+  &lt;li&gt;Introductions
+    &lt;h1 id=&quot;agenda&quot;&gt;Agenda&lt;/h1&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Prelude on Covenants - Darius&lt;/li&gt;
+  &lt;li&gt;Industry Updates - Darius&lt;/li&gt;
+  &lt;li&gt;Covenants and Restoring Scripts - Brandon (video conf)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;prelude-on-covenants&quot;&gt;&lt;u&gt;Prelude on Covenants&lt;/u&gt;&lt;/h1&gt;
+&lt;h3 id=&quot;limited-expressivity-in-bitcoin-scripts&quot;&gt;Limited expressivity in Bitcoin Scripts&lt;/h3&gt;
+&lt;h4 id=&quot;what-it-can-do&quot;&gt;What it can do:&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Rearrange the stack, check for equality, branch on stack values&lt;/li&gt;
+  &lt;li&gt;Limited arithmetic 32-bit numbers: add and substract&lt;/li&gt;
+  &lt;li&gt;Hash and check ECDSA/Schnorr signatures
+    &lt;h4 id=&quot;what-it-cannot-do&quot;&gt;What it cannot do:&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;No &lt;strong&gt;loops&lt;/strong&gt;, goto, recursion (not turing-complete)&lt;/li&gt;
+  &lt;li&gt;No &lt;strong&gt;bitwise&lt;/strong&gt; operations&lt;/li&gt;
+  &lt;li&gt;No arithmetic opcodes to do multiplication or division&lt;/li&gt;
+  &lt;li&gt;No &lt;strong&gt;concatenation&lt;/strong&gt; of elements on the stack&lt;/li&gt;
+  &lt;li&gt;No way to &lt;strong&gt;introspect&lt;/strong&gt; transactions (e.g. cannot access transaction amounts), or to carry over state from tx output to tx output
+    &lt;h4 id=&quot;history&quot;&gt;History&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;We used to have some of these opcodes but its disabled by Satoshi back in 2010 due to inherent vulnerabilities. One of which is OP_CAT which concatenates two stack elements could have been used to remotely crash a Bitcoin node (resource exhaustion attacks).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;what-are-covenants&quot;&gt;What are Covenants?&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Covenants&lt;/strong&gt; enforce constraints on how transactions (UTXOs) are spent in the future, extending the existing Bitcoin Script capabilities&lt;/li&gt;
+  &lt;li&gt;It opens up this capability of creating huge and complex contracts directly on Bitcoin with most this logic being pre-computed off-chain only executing when needing to on the chain.&lt;/li&gt;
+  &lt;li&gt;This allows users to commit a set of pre-defined spending conditions that we can then create crazy things like payment trees, payment pools and smart vaults and these improve Bitcoin’s, Lightning’s and UTXO’s scalability and privacy.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;3-key-covenants-proposal&quot;&gt;3 Key Covenants Proposal&lt;/h1&gt;
+&lt;h4 id=&quot;op_checktemplateverify-ctv-bip-119&quot;&gt;OP_CHECKTEMPLATEVERIFY (CTV) (BIP-119)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;If you are using CTV your transaction must have a template that matches the previously set template, the spending conditions must be met. Once applied these contracts cannot be changed by anyone, they allow for provably trustless sharing of UTXOs.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Shared UTXOs&lt;/strong&gt; (Lightning Network’s channel is already allowing sharing of UTXO between two parties with a 2/2 multi-sig)
+    &lt;ul&gt;
+      &lt;li&gt;Payment Tree and Payment Pools&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Channel factory&lt;/strong&gt; (batched channels) with m-out-of-n multi-sig channel&lt;/li&gt;
+      &lt;li&gt;Without shared UTXOs, the planet just doesn’t have enough computing power for everybody to have their own UTXOs. This also comes with privacy benefits, as many people will share a single footprint on L1.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;op_cat-bip-420&quot;&gt;OP_CAT (BIP-420)&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Takes two pieces of data on the stack and adds them together to form one.&lt;/li&gt;
+  &lt;li&gt;Not that harmful in today’s context there is a stack limit of 520 bytes&lt;/li&gt;
+  &lt;li&gt;10 lines of code implementation&lt;/li&gt;
+  &lt;li&gt;[ 0xBE, 0xEF ] –&amp;gt; [ 0xBEEF ]&lt;/li&gt;
+  &lt;li&gt;Can be used for:
+    &lt;ul&gt;
+      &lt;li&gt;Arithmetic opcodes to do multiplication or division&lt;/li&gt;
+      &lt;li&gt;Transaction introspection and state (e.g. access transaction amounts in script)&lt;/li&gt;
+      &lt;li&gt;Verification of Merkle proof&lt;/li&gt;
+      &lt;li&gt;Verify SNARKs in script (but the size still too big to be put into a script)&lt;/li&gt;
+      &lt;li&gt;CATVM and Drivechains&lt;/li&gt;
+      &lt;li&gt;… and more&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;lnhance--op_ctv--op_csfs--op_internalkey&quot;&gt;LNHANCE = OP_CTV + OP_CSFS + OP_INTERNALKEY&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Proposed by Brandon&lt;/li&gt;
+  &lt;li&gt;MOST of the code is CTV, but adds just enough to enable additional interesting protocols (e.g. Lightning Symmetry, simplified PTLC scripts, rebindable pre-signed vaults)&lt;/li&gt;
+  &lt;li&gt;Why LNHANCE?
+    &lt;ul&gt;
+      &lt;li&gt;You get almost everything of CTV, APO, TXHASH and … many more with much less code and much more guarantee and much more efficiency&lt;/li&gt;
+      &lt;li&gt;This combination provides a bit more flexibility and programmability than just OP_CTV alone, and enables extra things such as LN symmetry/eltoo.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;eltoo (also called LN-Symmetry)&lt;/strong&gt; allowing a latest channel state  to replace an earlier channel state without requiring a penalty. Greater efficiency and more friendly: LN nodes using eltoo only need to store the latest state (only a few kilobytes). For certain devices that lack large amounts of persistent storage (for example, hardware wallets), they may not be able to store enough data to effectively use penalty-based LN—but as long as they can store a few kB, they should be able to use eltoo-based LN.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;great-script-restoration&quot;&gt;Great Script Restoration&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;CTV, APO, LNHANCE, TXHASH, CCV, VAULT, etc. have failed to gain consensus because they are variously framed by both what they do enable and what they deliberately avoid enabling (e.g. CTV and LNHANCE avoid enabling Drivechains, but do enable coinpools and lightning symmetry respectively). This has resulted in in-fighting with everyone wanting to enable their thing, but still trying to avoid enabling some other thing. Two things that everyone wants to avoid enabling:
+    &lt;ul&gt;
+      &lt;li&gt;avoid enabling turing complete scripts (to ensure that we can statically analyze all scripts)&lt;/li&gt;
+      &lt;li&gt;avoid enabling anything that can increase validation costs for nodes&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Nothing is comprehensive enough for anyone to think, outside of the proposal originator, that it is the sensible next move forward.&lt;/li&gt;
+  &lt;li&gt;This is where the &lt;a href=&quot;https://bitcoinmagazine.com/technical/the-great-script-restoration-a-path-forward-for-bitcoin&quot;&gt;&lt;strong&gt;Great Script Restoration&lt;/strong&gt;&lt;/a&gt; comes in. Its a toolkit for developers to advocating for and analyzing the comprehensive restoration of scripts, just as Satoshi Nakamoto originally designed, we can actually attempt to explore the entire functional space we need, rather than debating and quarreling over which small feature extension is good enough for now.&lt;/li&gt;
+  &lt;li&gt;How we improve bitcoin is by engineering the best version of script that we can. What this enables is any developer to validate their contracts on bitcoin as long as they don’t unfairly burden nodes (i.e. their validation cost per byte doesn’t exceed that of checksig).&lt;/li&gt;
+  &lt;li&gt;By &lt;strong&gt;varops limit&lt;/strong&gt;. The idea is to assign a cost for each of the reactivated opcodes to take into account the worst case, i.e. most expensive computational cost to validate, that each opcode could create. With this, every one of these opcodes would have its own limit of sorts to restrain how many resources it could consume in verification. It would also be based on the size of any transaction using them, so maintain the ease of reasoning about it, while still adding up to an implicit global limit per block.&lt;/li&gt;
+  &lt;li&gt;This would solve the denial of service risks that caused Satoshi to disable all of these opcodes in the first place.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;industry-updates&quot;&gt;&lt;u&gt;Industry Updates&lt;/u&gt;&lt;/h1&gt;
+
+&lt;h1 id=&quot;bitcoin&quot;&gt;Bitcoin&lt;/h1&gt;
+&lt;h4 id=&quot;the-halving&quot;&gt;The halving&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://x.com/mononautical/status/1783528618720727288&quot;&gt;&lt;strong&gt;ViaBTC’s total reward for the halving block of &amp;gt;74BTC&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jimmysong.medium.com/halving-fee-chaos-4573b3c8bc9f&quot;&gt;&lt;strong&gt;Halving Chaos&lt;/strong&gt;&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Runes have resulted in some really high fees&lt;/li&gt;
+      &lt;li&gt;Just in the first 18 blocks, there’s been over $20M in fees spent, most of that in Runes issuance.&lt;/li&gt;
+      &lt;li&gt;there is a deeper cost in terms of block space congestion, where fees of 1000 sats/vbyte are currently not enough to get into certain blocks.
+        &lt;h4 id=&quot;reducing-bitcoin-blocksize-limit-from-4mb-to-300kbs&quot;&gt;&lt;a href=&quot;https://x.com/BTCtoOblivion/status/1794560100926902673&quot;&gt;&lt;strong&gt;Reducing Bitcoin blocksize limit from 4mb to 300kbs&lt;/strong&gt;&lt;/a&gt;&lt;/h4&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Existing blocks are filled with spam –&amp;gt; higher node running costs&lt;/li&gt;
+  &lt;li&gt;Debate on reducing blocksize limit to 300kbs to:
+    &lt;ul&gt;
+      &lt;li&gt;keep cost of running nodes low (more nodes –&amp;gt; high decentralisation)&lt;/li&gt;
+      &lt;li&gt;promote scalability in L2s, L3s instead of onchain scaling&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;bitvmx-a-virtual-cpu-to-optimistically-execute-arbitrary-programs-on-bitcoin&quot;&gt;&lt;a href=&quot;https://groups.google.com/g/bitcoindev/c/8IJS0WK_Cp4&quot;&gt;BitVMX: A Virtual CPU to optimistically execute arbitrary programs on Bitcoin&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;developed by @RootstockLabs &amp;amp; @FairGateLabs&lt;/li&gt;
+  &lt;li&gt;an enhanced, pragmatic upgrade to the BitVM computing paradigm that could make BitVM faster, more efficient, and easier for developers to implement.&lt;/li&gt;
+  &lt;li&gt;Both BitVM and BitVMX work in a similar way to Optimistic Roll Ups on Ethereum. As in - they allow computation to be ~verified~ on Bitcoin instead of ~executed~ on Bitcoin. This means - no hard forks required. It all works within the constraints that Bitcoin provides.&lt;/li&gt;
+  &lt;li&gt;The team at RootstockLabs approached this with a simple question: how could we use BitVM to build better bridges to Bitcoin? And do this in a way that is much more computationally efficient, and therefore more suitable for the practical needs of a Bitcoin side chain.&lt;/li&gt;
+  &lt;li&gt;Where BitVMX enhances BitVM is in the amount of pre-computation required, the transaction space consumed, and more importantly, the complexity of the solution.&lt;/li&gt;
+  &lt;li&gt;Now, in theory, BitVMX could be used to run anything on Bitcoin - even Linux. But we expect the most likely and most obvious early use cases are:
+    &lt;ul&gt;
+      &lt;li&gt;building aggregator oracles to collect, verify, and store data on Bitcoin&lt;/li&gt;
+      &lt;li&gt;running SNARK or STARK verifiers that could be used to store and automate fund distribution on Bitcoin, and&lt;/li&gt;
+      &lt;li&gt;Building bridges between Bitcoin and sidechains like Rootstock instead of 2WayPeg&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;utreexod-beta-release&quot;&gt;&lt;a href=&quot;https://groups.google.com/g/bitcoindev/c/5GyV9af9lv4&quot;&gt;Utreexod beta release&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Utreexo is a novel method for managing the Bitcoin UTXO (Unspent Transaction Output) set, designed to make Bitcoin nodes more efficient. The UTXO set is a collection of all unspent transaction outputs, which is crucial for validating transactions in the Bitcoin network. As Bitcoin grows, the UTXO set becomes larger, making it more resource-intensive for nodes to maintain.&lt;/li&gt;
+  &lt;li&gt;Utreexo introduces a cryptographic accumulator to represent the UTXO set in a compact form. This approach significantly reduces the storage requirements for full nodes. Here’s a breakdown of key concepts:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Accumulator:&lt;/strong&gt; A data structure that allows for the compact representation of a large set of data. In Utreexo, it enables the representation of the entire UTXO set in a very small size.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Proofs:&lt;/strong&gt; When a transaction spends a UTXO, it provides a proof that the UTXO exists in the accumulator. This proof can be efficiently verified.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Efficiency:&lt;/strong&gt; Utreexo reduces the storage requirements for full nodes, making it possible to run a full node on devices with limited storage capacity, like smartphones or small computers.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Improved Deletion Algorithm:&lt;/strong&gt; The deletion algorithm in Utreexo allows for efficient removal of spent UTXOs from the accumulator.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Utreexod, a full node implementation that incorporates Utreexo accumulators.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Utreexo Accumulators:&lt;/strong&gt; Utreexod implements Utreexo accumulators with an improved deletion algorithm. This allows for efficient handling of the UTXO set, reducing storage requirements.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Efficient P2P Transaction Relay:&lt;/strong&gt; The node supports efficient peer-to-peer (P2P) transaction relay by caching Utreexo proofs for transactions in the mempool (a pool of pending transactions).&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Quick Sync:&lt;/strong&gt; Utreexod includes a feature called AssumeUtreexo which allows for rapid synchronization to the current tip of the blockchain.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Built-in Wallet Support:&lt;/strong&gt; The node comes with built-in wallet support via the Bitcoin Development Kit (BDK), facilitating seamless wallet operations.&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Electrum Personal Server Support:&lt;/strong&gt; This feature allows Utreexod to work with other wallets that use Electrum, a popular lightweight Bitcoin wallet.
+        &lt;h4 id=&quot;dlcs-vs-l2-vs-archs-native-zkvm&quot;&gt;&lt;a href=&quot;https://x.com/bonomat/status/1790319800650186831&quot;&gt;DLCs vs L2 vs Arch’s native zkVM&lt;/a&gt;&lt;/h4&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;DLC Oracle &lt;strong&gt;can be decentralised&lt;/strong&gt; by having a quorum of oracles&lt;/li&gt;
+  &lt;li&gt;DLCs &lt;strong&gt;support all tokens&lt;/strong&gt; (native/non-native) as DLCs work with UTXOs and anything that can be transferred in an UTXO can be used in a DLC.&lt;/li&gt;
+  &lt;li&gt;DLC has &lt;strong&gt;less programmability&lt;/strong&gt; than L2 or Arch which can run a turing complete VM&lt;/li&gt;
+  &lt;li&gt;DLCs can be &lt;strong&gt;composed&lt;/strong&gt;: you can spend one DLC into another. Using @get10101’s DLC-channels you can even settle all of the DLCs off-chain without having to go on-chain.&lt;/li&gt;
+  &lt;li&gt;DLCs are permissionless as no one’s permission is required. DLCs are discreet in the sense that no external observer can learn its existence or details from the public ledger.
+    &lt;h4 id=&quot;microstrategy-orange&quot;&gt;&lt;a href=&quot;https://bitcoinmagazine.com/business/microstrategy-announces-decentralized-id-platform-on-bitcoin-called-microstrategy-orange&quot;&gt;MicroStrategy Orange&lt;/a&gt;&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;MicroStrategy Orange, which is an an enterprise platform for building decentralized identity applications on the Bitcoin blockchain&lt;/li&gt;
+  &lt;li&gt;“Custodial or non-custodial, the obvious thing is every Bitcoin wallet out there should incorporate the capability of creating a Bitcoin based digital identity. Many messaging platforms suffer from the same challenges that email does. When you get a text message, how do you know the person who sent you the text message…We would want to include an orange check for these different messaging platforms.”&lt;/li&gt;
+  &lt;li&gt;“Where I can now credential my identity anchored to Bitcoin — with a university degree, with a course certification issued by a hyperscaler, with your medical record and present those and have those verified all in a decentralized way. But with the ultimate identity living and being anchored to the Bitcoin blockchain.”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;alpen---introducing-snarknado&quot;&gt;&lt;a href=&quot;https://www.alpenlabs.io/blog/snarknado-practical-round-efficient-snark-verifier-on-bitcoin&quot;&gt;Alpen - Introducing SNARKnado&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;BitVM&lt;/strong&gt;: Introduced by Robin Linus, BitVM is a permissioned bisection protocol enabling optimistic verification of arbitrary computations on Bitcoin, using a RISC-V virtual machine. However, it has two main shortcomings:
+    &lt;ul&gt;
+      &lt;li&gt;Only a predetermined set of parties can initiate a challenge.&lt;/li&gt;
+      &lt;li&gt;The bisection protocol can take a long time, potentially over half a year.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;BitVM2&lt;/strong&gt;: Aims to allow permissionless challenging and reduces the number of rounds by not using bisection, but it faces significant practical challenges and high onchain costs.&lt;/li&gt;
+  &lt;li&gt;SNARKnado replaces the RISC-V abstraction of BitVM with a protocol based on Polynomial Interactive Oracle Proofs (PIOPs), specifically using PLONK, a popular SNARK construction. This results in a more efficient bisection protocol, reducing the number of rounds needed for verification.&lt;/li&gt;
+  &lt;li&gt;SNARKnado serves as an intermediate protocol between BitVM and BitVM2. While BitVM2 aims for permissionless challenging, SNARKnado’s structure can inform and improve BitVM2 implementations.&lt;/li&gt;
+  &lt;li&gt;SNARKnado offers over an &lt;strong&gt;eight-fold improvement&lt;/strong&gt; in bisection rounds compared to BitVM, estimating the number of rounds to four. However, it &lt;strong&gt;does not support permissionless challenging like BitVM2&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;lightning&quot;&gt;Lightning&lt;/h1&gt;
+&lt;h4 id=&quot;taproot-assets-channel---first-mainnet-asset-swap&quot;&gt;&lt;a href=&quot;https://x.com/roasbeef/status/1791171395336192174&quot;&gt;Taproot Assets Channel - First Mainnet Asset Swap&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;https://assets-global.website-files.com/62f8cf6b2a4c4e15363f6493/64a32becc59e13976d8db972_spaces2F-MIzyiDsFtJBYVyhr1nT2Fuploads2F5YUmQvbKYMvannBLtsLt2FGroup2038812-p-1600.png&quot; alt=&quot;Taproot Assets on Lightning | 1500&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Zane -[$beefbux channel]-&amp;gt; Yara -[$BTC  Channel]-&amp;gt; Carol&lt;/li&gt;
+  &lt;li&gt;Zane is able to pay Carol’s BTC invoice by swapping his $beefbux for $BTC on the fly using the edge RFQ forwarding+negotiation system!&lt;/li&gt;
+  &lt;li&gt;Asset-to-asset transfer: Carol can receive in any Taproot Assets /  $BTC while Zane can send in any Taproot Assets / $BTC&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;how-to-make-use-of-bolt12-in-ldk&quot;&gt;&lt;a href=&quot;https://lightningdevkit.org/blog/bolt12-has-arrived/&quot;&gt;How to Make Use of BOLT12 in LDK&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Jeff Czyz from Lightning Dev Kit wrote a walkthrough on BOLT12, explaining what it is and how one can make use of it in LDK.&lt;/p&gt;
+
+&lt;p&gt;“BOLT12 is a new payment protocol for Lightning that offers enhanced privacy, reusable payment codes, refunds, and much more, all natively over the Lightning Network.” No additional servers are required. This is all possible using new technologies like onion messages and route blinding. BOLT12 specification defines “an offer that can be considered a precursor to an invoice. It contains less data than an invoice and is smaller to display as a QR code. Optionally, it may contain blinded paths—more on that in a moment. Someone scanning an offer sends an invoice request to the intended recipient, who replies with an invoice containing a unique payment hash.”&lt;/p&gt;
+
+&lt;h4 id=&quot;announcing-lnd-018-smarter-sweeps-inbound-fees-and-improved-scaling-&quot;&gt;&lt;a href=&quot;https://x.com/lightning/status/1796235510144540835&quot;&gt;Announcing LND 0.18: Smarter Sweeps, Inbound Fees, and Improved Scaling! &lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Delay Aware Fee Bumping + Sweeping:
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: This feature aims to optimize the process of fee bumping (increasing the transaction fee to ensure timely inclusion in a block) and sweeping (consolidating small outputs into a single transaction).&lt;/li&gt;
+      &lt;li&gt;Impact: Reduces the risk of cascading force closures, where a chain reaction of closing channels could occur due to low fees causing delays.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Prep for the Transaction Version 3 Fee Bumping Policy:
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: Preparation for upcoming changes in Bitcoin’s transaction version 3, which will include new rules and mechanisms for fee bumping.&lt;/li&gt;
+      &lt;li&gt;Impact: Ensures LND is ready for future updates to the Bitcoin protocol, maintaining compatibility and improving fee management.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Experimental Support for Inbound Fees:
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: Introduces a new traffic shaping option that allows nodes to charge fees for receiving payments, not just sending them.&lt;/li&gt;
+      &lt;li&gt;Impact: Provides full nodes with a new way to monetize their services and manage traffic more effectively.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Blinded Paths Forwarding+Sending Support:
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: Adds support for blinded paths, a privacy feature that conceals the actual route a payment takes across the network.&lt;/li&gt;
+      &lt;li&gt;Impact: Enhances privacy for users by preventing the exposure of the entire payment route, making it harder to trace transactions.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Improved Pruned Node and Tor Support:
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: Enhances compatibility with pruned Bitcoin nodes (nodes that only store a subset of the blockchain) and improves support for Tor, which anonymizes network traffic.&lt;/li&gt;
+      &lt;li&gt;Impact: Increases the accessibility and privacy of running an LND node, especially for users with limited storage or who prioritize anonymity.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;First Class Fee Probing (new EstimateRouteFee RPC call):
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: Introduces a new RPC (Remote Procedure Call) method to estimate the fees for a specific route before actually sending a payment.&lt;/li&gt;
+      &lt;li&gt;Impact: Allows users and applications to better plan and optimize their payments by understanding potential fees upfront.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;New Native SQL Schema for Invoices:
+    &lt;ul&gt;
+      &lt;li&gt;Explanation: Implements a new SQL schema for managing invoices within LND, likely replacing the existing storage method.&lt;/li&gt;
+      &lt;li&gt;Impact: Enhances the efficiency and scalability of invoice handling, potentially leading to better performance and more robust data management.
+        &lt;h1 id=&quot;usd-ecash&quot;&gt;USD Ecash&lt;/h1&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://x.com/callebtc/status/1777598819355496587&quot;&gt;&lt;strong&gt;First tests of USD Ecash. Backed by BTC&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=5DdYR1FebZo&quot;&gt;&lt;strong&gt;Live Demo of Sending Ecash via Cashu&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.nobsbitcoin.com/cashu-me-v0-1/&quot;&gt;&lt;strong&gt;Cashu.me v0.1: Modern Ecash Experience in Your Browser&lt;/strong&gt;&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Cashu.me is a Chaumian Ecash wallet for Bitcoin built as a progressive web app (PWA). It is free and open-source software released under the MIT license.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments. Announcements No pictures or recordings Thank you OGBC and Lnfi Network for sponsorship of the event space and pizzas Introductions Agenda Prelude on Covenants - Darius Industry Updates - Darius Covenants and Restoring Scripts - Brandon (video conf)</summary></entry><entry><title type="html">Socratic Seminar 2</title><link href="/2024-03-08-socratic-seminar-2.html" rel="alternate" type="text/html" title="Socratic Seminar 2" /><published>2024-03-08T00:00:00+08:00</published><updated>2024-03-08T00:00:00+08:00</updated><id>/socratic-seminar-2</id><content type="html" xml:base="/2024-03-08-socratic-seminar-2.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+&lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;No pictures or recordings&lt;/li&gt;
+  &lt;li&gt;Thank you &lt;a href=&quot;https://www.ogbc.com/&quot;&gt;OGBC&lt;/a&gt; and &lt;a href=&quot;https://www.lnfi.network&quot;&gt;Lnfi Network&lt;/a&gt; for sponsorship of the event space and pizzas&lt;/li&gt;
+  &lt;li&gt;Introductions
+    &lt;h1 id=&quot;agenda&quot;&gt;Agenda&lt;/h1&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Taproot Channels - YY&lt;/li&gt;
+  &lt;li&gt;Industry Updates - Darius&lt;/li&gt;
+  &lt;li&gt;Discreet Log Contracts - Darius&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;bitcoin&quot;&gt;Bitcoin&lt;/h1&gt;
+
+&lt;h4 id=&quot;stranded-how-bitcoin-is-saving-wasted-energy-and-expanding-financial-freedom-in-africa&quot;&gt;&lt;a href=&quot;https://bitcoinmagazine.com/check-your-financial-privilege/stranded-bitcoin-saving-wasted-energy-in-africa&quot;&gt;&lt;strong&gt;Stranded: How Bitcoin is saving wasted energy and expanding financial freedom in Africa&lt;/strong&gt;&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Alex Gladstein has a great article about how Bitcoin Mining greates value for communities by tapping into stranded Energy.&lt;/p&gt;
+
+&lt;h4 id=&quot;bitvm-8-bit-pc&quot;&gt;&lt;a href=&quot;https://x.com/super_testnet/status/1732493052185391160?s=20&quot;&gt;BitVM 8-bit PC&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;“It’s true, you can write bitcoin smart contracts in Assembly now instead of learning boolean logic circuits,” wrote @Super Testnet. Someone also wrote a multiplication function for this virtual CPU.&lt;/p&gt;
+
+&lt;h4 id=&quot;utxo-arbitrage-by-magic-eden-on-coinbase&quot;&gt;&lt;a href=&quot;https://twitter.com/mononautical/status/1758262223456162279?s=46&amp;amp;t=WMmqJ4MdyeBHjVDNEbJ-rg&quot;&gt;UTXO Arbitrage by Magic Eden on Coinbase&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;For every marketplace purchase on Magic Eden, they include a tiny output (UTXO) for the marketplace fee. These are typically tiny outputs, 1000 sats, 2000 sats, etc. A pain in the butt to consolidate some day. Each of these costs money to spend.&lt;/li&gt;
+  &lt;li&gt;The genius move is that instead of using their own address to receive these utxos, they are using their Coinbase account address. So all these deposits just get credited to Magic Eden’s Coinbase account, and Coinbase is responsible for paying the fees to consolidate them.&lt;/li&gt;
+  &lt;li&gt;Since Magic Eden started using this address in early December ‘23, Coinbase has paid 65.16 BTC* to consolidate 183,743 inputs worth 140.30 BTC.&lt;/li&gt;
+  &lt;li&gt;For 110,444 of those (worth 12.30 BTC), the fees paid actually exceeded the value of the inputs, leading to a dead loss of 34 BTC.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;64-bit-arithmetic-soft-fork&quot;&gt;64-bit Arithmetic Soft Fork&lt;/h4&gt;
+&lt;p&gt;This BIP (Bitcoin Improvement Proposal) proposes the addition of new arithmetic opcodes to the Bitcoin protocol to enable 64-bit signed integer math operations directly within Bitcoin scripts. These new opcodes include:&lt;/p&gt;
+
+&lt;p&gt;OP_ADD64: Adds two 64-bit signed integers.
+OP_SUB64: Subtracts one 64-bit signed integer from another.
+OP_MUL64: Multiplies two 64-bit signed integers.
+OP_DIV64: Divides one 64-bit signed integer by another.
+OP_NEG64: Negates a 64-bit signed integer.
+OP_LESSTHAN64: Compares two 64-bit signed integers to check if the first is less than the second.
+OP_LESSTHANOREQUAL64: Compares two 64-bit signed integers to check if the first is less than or equal to the second.
+OP_GREATERTHAN64: Compares two 64-bit signed integers to check if the first is greater than the second.
+OP_GREATERTHANOREQUAL64: Compares two 64-bit signed integers to check if the first is greater than or equal to the second.
+These opcodes enable more complex arithmetic and comparison operations to be performed within Bitcoin scripts, which can be useful for implementing advanced smart contracts and applications on the Bitcoin blockchain.&lt;/p&gt;
+
+&lt;p&gt;Additionally, the BIP proposes a set of conversion opcodes to facilitate the conversion of existing Bitcoin protocol numbers, known as CScriptNums, into 4 and 7-byte little-endian representations. These conversion opcodes include:&lt;/p&gt;
+
+&lt;p&gt;OP_SCRIPTNUMTOLE64: Converts a CScriptNum to a 7-byte little-endian representation.
+OP_LE64TOSCRIPTNUM: Converts a 7-byte little-endian representation to a CScriptNum.
+OP_LE32TOLE64: Converts a 4-byte little-endian representation to a 7-byte little-endian representation.
+These conversion opcodes are useful for interoperability between existing Bitcoin protocol numbers and the new 64-bit signed integer arithmetic operations proposed by the BIP. They ensure that data can be converted and manipulated consistently within Bitcoin scripts, maintaining compatibility with existing protocol standards while expanding functionality.&lt;/p&gt;
+
+&lt;p&gt;https://github.com/bitcoin/bips/pull/1538
+https://github.com/bitcoin/bitcoin/pull/29221
+https://delvingbitcoin.org/t/64-bit-arithmetic-soft-fork/397
+Credit: Andrew Poelstra, Sanket Kanjalkar, Chris Stewart&lt;/p&gt;
+
+&lt;h4 id=&quot;mempool-incentive-compatibility&quot;&gt;&lt;a href=&quot;https://delvingbitcoin.org/t/mempool-incentive-compatibility/553&quot;&gt;Mempool Incentive Compatibility&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;The post provides an in-depth exploration of incentive compatibility in the context of Bitcoin mempool management, particularly focusing on the ordering of transactions to maximize fees. It discusses various scenarios, motivations, and challenges associated with selecting transactions for inclusion in blocks, considering factors such as fee rates, block size constraints, topology requirements, and transaction dependencies.&lt;/p&gt;
+
+&lt;h1 id=&quot;lightning&quot;&gt;Lightning&lt;/h1&gt;
+
+&lt;h4 id=&quot;btcpayserver---lnbank-plugin-exploit&quot;&gt;&lt;a href=&quot;https://stacker.news/items/347361?ref=nobsbitcoin.com&quot;&gt;BTCPayServer - LNBank Plugin Exploit&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;BTCPay ServerBTCPay Server is a self-hosted, open-source cryptocurrency payment processor.&lt;/li&gt;
+  &lt;li&gt;LNbank is a plugin for BTCPay Server to use the internal Lightning node in custodial mode: It allows server admins to open up the Lightning node and give users access via custodial layer 3 wallets.&lt;/li&gt;
+  &lt;li&gt;What happened?
+    &lt;ul&gt;
+      &lt;li&gt;From the BTCPay server the attackers were able to send payments to Bitlifi (CEX) wallet using the LNbank API&lt;/li&gt;
+      &lt;li&gt;The BTCPay server is connected to victim’s LN node, which sent all the payments using different routes/channels but always ending the transaction on CEX’s node ln-1.anycoin.cz.&lt;/li&gt;
+      &lt;li&gt;The attack stopped at 21:02h UTC when victim understood what was happening and shutdown the servers where BTCPay server and the LN node are running.&lt;/li&gt;
+      &lt;li&gt;The final amount of BTC transferred from victim node to CEX node was evaluated to be ~4BTC&lt;/li&gt;
+      &lt;li&gt;All funds were then transferred out of CEX node&lt;/li&gt;
+      &lt;li&gt;List of accounts created at the BTCPay server and all the information related to the attackers were exposed for CEX’s further investigation with the KYC’ed information but they choose not to do anything&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;LNbank dev admitted that there is a bug and urge everyone to update to v1.8.9 as soon as possible.&lt;/li&gt;
+  &lt;li&gt;Note: This is a form of hot wallet risk. Software running on lightning nodes often have full control of the node in question which means any vulnerability found in that software can be used to steal balances. Recommend to be careful of what apps to run, and secure authentication token files properly (LND uses special cookies called macaroons)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;liquidity-on-lightning-moving-from-ux-to-economix-&quot;&gt;&lt;a href=&quot;https://medium.com/breez-technology/liquidity-on-lightning-moving-from-ux-to-economix-6e597d9e1abd&quot;&gt;Liquidity on Lightning: Moving from UX to Economix &lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;By Roy Sheineld, Breez Technology&lt;/li&gt;
+  &lt;li&gt;The discussion delves into the evolution of liquidity on the Lightning Network, emphasizing the role of Lightning Service Providers (LSPs) in addressing technical challenges and promoting its transition into a thriving financial network. It outlines the constraints and opportunities faced by LSPs, such as volatile on-chain transaction fees, and highlights strategies to enhance their viability, including optimizing the lifetime value to customer acquisition cost ratio (LTV/CAC). The article also explores broader constraints and opportunities for Lightning as a whole, underscoring its potential to significantly increase Bitcoin’s throughput while adapting to various parameters and local conditions. Ultimately, it emphasizes the importance of embracing constraints as natural and integral to the maturation process of Lightning and the broader transition to a bitcoin economy.&lt;/li&gt;
+  &lt;li&gt;Note: Breez offers Lightning as a Service which enables developers to integrate Lightning and bitcoin payments into their apps and services with a very shallow learning curve. The use cases are endless – from social apps that want to integrate tipping between users to fintech services interested in adding bitcoin solutions. Crucially, this SDK is an end-to-end, non-custodial, drop-in solution powered by Greenlight, a built-in liquidity provider, on-chain interoperability, third-party fiat on-ramps, and other services users and operators need.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;discrete-log-contracts&quot;&gt;Discrete Log Contracts&lt;/h4&gt;
+
+&lt;p&gt;Discreet Log Contracts (DLCs) are a type of smart contract protocol that operates on the Bitcoin blockchain, allowing for the execution and settlement of contracts based on events external to the blockchain.&lt;/p&gt;
+
+&lt;p&gt;During the setup of a DLC both parties lock up funds in a DLC output. This output can only be spent with signatures from both parties. At the time of the DLC setup the actual event outcome is not know yet, but the oracle has announced that it will attest to its outcome at a specific point in the future. Both parties generate multiple CETs, each defining how to split up the locked up funds based on a specific potential future event outcome. After agreeing on the CETs, both parties exchange adaptor signatures on each of them. An adaptor signature for any given CET will only be unlocked if the oracle attests to the specific event outcome associated with the corresponding CET.&lt;/p&gt;
+
+&lt;p&gt;The key characteristics of a CET are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Only one CET will become valid after the attestation of one or multiple oracles.&lt;/li&gt;
+  &lt;li&gt;Neither party can publish a valid CET without having the oracle’s attestation.&lt;/li&gt;
+  &lt;li&gt;Publishing a CET is unilateral after the oracle’s attestation.&lt;/li&gt;
+  &lt;li&gt;The most simple example of a DLC is a binary option. The diagram below illustrates the transaction structure of such a DLC. As the potential future event outcomes can only be true or false, only two CETs have to be generated.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://10101.finance/assets/images/binary_dlc-9ab42cff6edd3fcdd312f8f920328e0c.png&quot; alt=&quot;Discrete Log Contracts&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments. Announcements No pictures or recordings Thank you OGBC and Lnfi Network for sponsorship of the event space and pizzas Introductions Agenda Taproot Channels - YY Industry Updates - Darius Discreet Log Contracts - Darius</summary></entry><entry><title type="html">Socratic Seminar 1</title><link href="/2024-01-29-socratic-seminar-1.html" rel="alternate" type="text/html" title="Socratic Seminar 1" /><published>2024-01-29T00:00:00+08:00</published><updated>2024-01-29T00:00:00+08:00</updated><id>/socratic-seminar-1</id><content type="html" xml:base="/2024-01-29-socratic-seminar-1.html">&lt;p&gt;Join our Telegram Group:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://i.ibb.co/2d4ncjx/Telegram-QR.png&quot;&gt;TelegramQR&lt;/a&gt;&lt;/p&gt;
 
