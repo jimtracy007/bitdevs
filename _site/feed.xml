@@ -1,4 +1,329 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-06-03T18:37:17+08:00</updated><id>/feed.xml</id><title type="html">Bitdevs SG</title><subtitle>BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.</subtitle><entry><title type="html">Socratic Seminar 3</title><link href="/2024-05-31-socratic-seminar-3.html" rel="alternate" type="text/html" title="Socratic Seminar 3" /><published>2024-05-31T00:00:00+08:00</published><updated>2024-05-31T00:00:00+08:00</updated><id>/socratic-seminar-3</id><content type="html" xml:base="/2024-05-31-socratic-seminar-3.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2024-11-04T09:55:05+08:00</updated><id>/feed.xml</id><title type="html">Bitdevs SG</title><subtitle>BitDevs is a community for those interested in discussing and participating in the research and development of Bitcoin and related protocols.</subtitle><entry><title type="html">Socratic Seminar 7</title><link href="/2024-10-29-socratic-seminar-7.html" rel="alternate" type="text/html" title="Socratic Seminar 7" /><published>2024-10-29T00:00:00+08:00</published><updated>2024-10-29T00:00:00+08:00</updated><id>/socratic-seminar-7</id><content type="html" xml:base="/2024-10-29-socratic-seminar-7.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+&lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;No pictures or recordings&lt;/li&gt;
+  &lt;li&gt;Thank you &lt;a href=&quot;https://www.ogbc.com/&quot;&gt;OGBC&lt;/a&gt; and &lt;a href=&quot;https://www.lnfi.network&quot;&gt;Lnfi Network&lt;/a&gt; for sponsorship of the event space and pizzas&lt;/li&gt;
+  &lt;li&gt;Introductions
+    &lt;h1 id=&quot;agenda&quot;&gt;Agenda&lt;/h1&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Industry Updates, &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1k0I348eU-dEVKTTBVwfyyXozLjDCTqCPszLFGgJ7KOg/edit?usp=sharing&quot;&gt;Bitcoin Projects’ Fundraising Updates&lt;/a&gt; - Darius&lt;/li&gt;
+  &lt;li&gt;Status &amp;amp; Roadmap for Ark at Second - Steven Roose, CEO, Second&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;industry-updates---bitcoin-news--releases&quot;&gt;Industry Updates - Bitcoin News &amp;amp; Releases&lt;/h1&gt;
+
+&lt;h4 id=&quot;bitcoin-mempool-upgrades&quot;&gt;&lt;a href=&quot;https://bitcoinops.org/en/newsletters/2024/10/11/#guide-for-wallets-employing-bitcoin-core-28-0&quot;&gt;Bitcoin Mempool Upgrades”&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Recently, there has been some really cool mempool P2P upgrades to Bitcoin that are worth talking about.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Package relay for 1P1C (one parent one child).&lt;/strong&gt; In Bitcoin transactions, sometimes transactions get “stuck” in the mempool (the pool of pending transactions) because of low fees. A common strategy to unstick a transaction is to create a “child” transaction with a higher fee, linking it to the “parent” transaction to raise the combined fee rate and encourage miners to include it in the block. This is called Child Pays for Parent (CPFP). The one-parent-one-child (1p1c) package relay is an optimization that allows Bitcoin nodes to more efficiently relay transactions using CPFP by accepting packages where a single parent transaction has just one child transaction. This is expected to improve the reliability and speed of transaction confirmation, particularly for users who rely on CPFP to boost fees on low-fee transactions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;TRUC transaction relay.&lt;/strong&gt; Topologically Restricted Until Confirmation (TRUC) is a policy related to transaction relay in Bitcoin. TRUC transactions are designed to be relayed through the network with certain restrictions that limit how they interact with other unconfirmed transactions. The restriction ensures that TRUC transactions can’t be double-spent or altered until they are confirmed in a block. The goal of TRUC is to enhance security by creating a predictable, orderly structure for how transactions propagate across the network, helping reduce the likelihood of mempool-related attacks.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Package RBF.&lt;/strong&gt; Package RBF is an enhancement to the existing Replace-by-Fee (RBF) mechanism that allows users to “replace” low-fee transactions with ones that have a higher fee to increase their chances of confirmation. Traditionally, RBF only applied to individual transactions. Package RBF allows users to replace multiple transactions in a “package” at once, which includes a parent transaction and its child transactions. This can be particularly useful for more complex transaction structures (e.g., CPFP setups) where multiple transactions are linked. The benefit of Package RBF is that it enables more flexible fee bumping for transactions that are part of a sequence, improving the chances of quick confirmation for dependent transactions and enhancing control for users sending chains of transactions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Sibling eviction.&lt;/strong&gt; Sibling eviction is a new feature that optimizes mempool (the pool of unconfirmed transactions held by each node) management. In the Bitcoin mempool, there can be multiple “sibling” transactions—alternative versions of the same transaction where only one can ultimately be confirmed. With sibling eviction, when a new transaction package enters the mempool and competes with an existing one, nodes can evict sibling transactions that are less likely to be confirmed, keeping only the most viable transaction in the mempool. This can improve the efficiency of mempool usage, reduce clutter, and prioritize transactions with better chances of confirmation, especially during periods of high network congestion.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Standard P2A (pay-to-anchor) output script type.&lt;/strong&gt; The Pay-to-Anchor (P2A) output type is a new standard script type introduced in Bitcoin Core 28.0. It’s designed specifically for situations that involve anchoring transactions—transactions that “anchor” data or other transactions to the Bitcoin blockchain. P2A outputs can provide a standardized way to create “anchor” transactions, which are commonly used in Layer 2 solutions and protocols like the Lightning Network. Anchors ensure that off-chain transactions or data remain tied to an on-chain transaction, maintaining integrity and traceability. The standardization of the P2A output script type enables more predictable behavior across different node implementations and can make it easier for developers to build tools and protocols that rely on anchored data, enhancing interoperability and reliability in Bitcoin Layer 2 applications.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Gregory Sanders has written a &lt;a href=&quot;https://bitcoinops.org/en/bitcoin-core-28-wallet-integration-guide/&quot;&gt;guide&lt;/a&gt; for Optech aimed at developers of wallets and other software that uses Bitcoin Core to create or broadcast transactions. The guide walks through the use of several of the features and describes how the features can be useful for multiple protocols, including simple payments and RBF fee bumping, LN commitments and &lt;a href=&quot;https://bitcoinops.org/en/topics/htlc/&quot;&gt;HTLCs&lt;/a&gt;, &lt;a href=&quot;https://bitcoinops.org/en/topics/ark/&quot;&gt;Ark&lt;/a&gt;, and &lt;a href=&quot;https://bitcoinops.org/en/topics/splicing/&quot;&gt;LN splicing.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;musig2-merged-libsecp256k1&quot;&gt;&lt;a href=&quot;https://github.com/bitcoin-core/secp256k1/blob/master/examples/musig.c&quot;&gt;MuSig2 merged libsecp256k1&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;libsecp256k1 is a highly optimized C library designed to perform cryptographic operations on the secp256k1 elliptic curve, which is the specific curve Bitcoin uses for its public-key cryptography. Created and maintained by Bitcoin Core developers, this library is critical to the Bitcoin network’s efficiency and security.&lt;/p&gt;
+
+&lt;p&gt;MuSig2 is a secure n-of-n signing scheme that combines participant keys into a group key and produces Schnorr signatures for the group key.&lt;/p&gt;
+
+&lt;p&gt;The merging of MuSig2 into libsecp256k1 is significant because it provides a highly efficient, standardized, and secure implementation of the MuSig2 multi-signature scheme for Bitcoin and other cryptographic applications.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://groups.google.com/g/bitcoindev/c/5GyV9af9lv4?ref=nobsbitcoin.com&quot;&gt;Utreexod Beta Is Now Available for General Public Testing&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Utreexod is a full node bitcoin implementation with support for utreexo accumulators. It enables immediate node bootstrap by having the UTXO state hardcoded into the codebase, uses a tiny amount of memory, and has a low disk i/o.&lt;/p&gt;
+
+&lt;p&gt;Key features:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Implementation of efficient Utreexo accumulators with an improved deletionn algorithm from the Utreexo paper.&lt;/li&gt;
+  &lt;li&gt;Efficient P2P transaction relay with support for caching utreexo proofs for mempool transactions.&lt;/li&gt;
+  &lt;li&gt;Quick sync to the tip of the blockchain with AssumeUtreexo.&lt;/li&gt;
+  &lt;li&gt;Built in wallet support (with BDK wallet).&lt;/li&gt;
+  &lt;li&gt;Electrum personal server support for usage with other wallets.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;spark---a-payment-focused-bitcoin-l2&quot;&gt;&lt;a href=&quot;https://x.com/buildonspark/status/1849833055839727821&quot;&gt;Spark - A Payment-focused Bitcoin L2&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Spark is a Bitcoin L2 that enables instant, dirt-cheap, and unlimited self-custodial transactions of bitcoin and tokens while also enabling users to send and receive natively via Lightning. It’s open-sourced and secured by Bitcoin.&lt;/p&gt;
+
+&lt;p&gt;It’s an L2 that tries to solve a lot of the onboarding issues in lightning at the expense of trustlessness. At a high level, it acts as an intermediary “less trusted” layer between Bitcoin and Lightning with the following advantages:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Native BTC&lt;/li&gt;
+  &lt;li&gt;Full self-custody&lt;/li&gt;
+  &lt;li&gt;Instant settlement&lt;/li&gt;
+  &lt;li&gt;Extremely low fees&lt;/li&gt;
+  &lt;li&gt;Native tokens (e.g. stablecoins)&lt;/li&gt;
+  &lt;li&gt;Native Lightning interface &lt;strong&gt;without needing to run a Lightning node&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Ability to scale to billions of users&lt;/li&gt;
+  &lt;li&gt;1/n trust assumptions (or minority/n) with the risk only at the time of transfer, not in perpetuity&lt;/li&gt;
+  &lt;li&gt;Unconditional unilateral exits&lt;/li&gt;
+  &lt;li&gt;Capital efficiency (no pre-funding, liquidity lockups, etc.)&lt;/li&gt;
+  &lt;li&gt;Exists without the need for a new Bitcoin OPcode or any Bitcoin changes (although improves when they’re available)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Statechains Overview&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Goal: Transfer Bitcoin UTXOs off-chain by creating a jointly controlled UTXO between the user and the Statechain Entity (SE).&lt;/li&gt;
+  &lt;li&gt;Key Pairing: The user (e.g., Alice) and SE have private keys whose combined key controls the UTXO. This combined key must sign to spend it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Ownership Transfer Process&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Tweaking SE’s Key: When Alice transfers the UTXO to Bob, SE tweaks its key so that SE and Bob’s combined key can sign the same UTXO, invalidating Alice’s ability to sign.&lt;/li&gt;
+  &lt;li&gt;Security via Key Discarding: SE deletes the untweaked key used for Alice, preventing her from collaborating on future transactions.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Exit Transactions with Timelocks&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Exit Assurance: Exit transactions allow users to claim the UTXO on-chain if needed, with each owner getting a timelocked exit transaction.&lt;/li&gt;
+  &lt;li&gt;Decreasing Timelocks: With each transfer, the timelock decreases, ensuring that the latest owner has priority in claiming the UTXO.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Leaf-Splitting for Flexible Spending&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Key Splitting for Denominations: UTXOs can be divided into smaller denominations by splitting the key across several branches, allowing finer management without on-chain transactions.&lt;/li&gt;
+  &lt;li&gt;Ensuring Key Consistency: The sum of keys in each branch matches the original parent key, enabling flexible aggregation when needed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Aggregation and Spark Trees&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Branch and Leaf Structure: Spark trees use branches and leaves to organize UTXOs, removing absolute timelocks and aggregating keys across branches.&lt;/li&gt;
+  &lt;li&gt;Aggregation of Child Keys: Each child key from a split branch is created to sum up to the parent key, supporting complex key management without on-chain interactions.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;ocean-unveils-decentralized-alternative-templates-for-universal-mining-datum&quot;&gt;&lt;a href=&quot;https://newsdirect.com/news/ocean-restoring-bitcoin-mining-decentralization-177177279&quot;&gt;OCEAN Unveils Decentralized Alternative Templates for Universal Mining (DATUM)&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Similar to Stratum V2, DATUM is designed to decentralize block construction by empowering miners to create their own block templates via their own Bitcoin node. Users can mine on pools that offer Datum support or solo mine without needing a third party to set up a server for them.&lt;/p&gt;
+
+&lt;p&gt;The launch of datum is motivated by concerns of large mining pools controlling over 50% of Bitcoin’s hash rate, thus increasing the risk of miner centralization and potential transaction censorship. DATUM aims to decentralize block construction, prevent 51% attacks and keep Bitcoin network free and open.&lt;/p&gt;
+
+&lt;h4 id=&quot;lava-loans-trust-minimized-bitcoin-secured-loans&quot;&gt;&lt;a href=&quot;https://delvingbitcoin.org/t/lava-loans-trust-minimized-bitcoin-secured-loans/1112&quot;&gt;Lava Loans: Trust-minimized, Bitcoin-Secured Loans&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;A solution that uses bitcoin smart contracts (discreet log contracts) to enable bitcoin-secured loans that offer users cryptographic security rather than exclusively reputational or legal assurances.&lt;/p&gt;</content><author><name></name></author><summary type="html">We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments. Announcements No pictures or recordings Thank you OGBC and Lnfi Network for sponsorship of the event space and pizzas Introductions Agenda Industry Updates, Bitcoin Projects’ Fundraising Updates - Darius Status &amp;amp; Roadmap for Ark at Second - Steven Roose, CEO, Second</summary></entry><entry><title type="html">Socratic Seminar 6</title><link href="/2024-08-30-socratic-seminar-6.html" rel="alternate" type="text/html" title="Socratic Seminar 6" /><published>2024-08-30T00:00:00+08:00</published><updated>2024-08-30T00:00:00+08:00</updated><id>/socratic-seminar-6</id><content type="html" xml:base="/2024-08-30-socratic-seminar-6.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+&lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;No pictures or recordings&lt;/li&gt;
+  &lt;li&gt;Thank you &lt;a href=&quot;https://www.ogbc.com/&quot;&gt;OGBC&lt;/a&gt; and &lt;a href=&quot;https://www.lnfi.network&quot;&gt;Lnfi Network&lt;/a&gt; for sponsorship of the event space and pizzas&lt;/li&gt;
+  &lt;li&gt;Introductions
+    &lt;h1 id=&quot;agenda&quot;&gt;Agenda&lt;/h1&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1LY14oP6CodN2LKt_kIjS6t2KdcB-Gi2gdD3wTYk8ZwY/edit&quot;&gt;P2P Economy with Lightning &amp;amp; Fiber Network&lt;/a&gt; - Cipher, CELL Studio&lt;/li&gt;
+  &lt;li&gt;Bitcoin Basics #3 - Heng Hong&lt;/li&gt;
+  &lt;li&gt;Industry Updates, &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1k0I348eU-dEVKTTBVwfyyXozLjDCTqCPszLFGgJ7KOg/edit?usp=sharing&quot;&gt;Bitcoin Projects’ Fundraising Updates&lt;/a&gt; - Darius&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;industry-updates---bitcoin-news--releases&quot;&gt;Industry Updates - Bitcoin News &amp;amp; Releases&lt;/h1&gt;
+
+&lt;h4 id=&quot;bip-draft-frost-signing&quot;&gt;&lt;a href=&quot;https://groups.google.com/g/bitcoindev/c/PeMp2HQl-H4&quot;&gt;BIP Draft: “FROST Signing”&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;The FROST (Flexible Round-Optimal Schnorr Threshold) signature scheme is designed to address key challenges in cryptographic signing processes by allowing a group of participants to jointly create a Schnorr signature using a threshold scheme. Areas of application: multi-sig wallets, DeFi whereby FROST are integrated into smart contracts to manage access controls, etc.&lt;/p&gt;
+
+&lt;p&gt;A BIP draft for the FROST threshold signing protocol has been proposed and is seeking feedback from the community.&lt;/p&gt;
+
+&lt;h4 id=&quot;bitcoin-core-v271-bug-fixes--performance-improvements&quot;&gt;&lt;a href=&quot;https://bitcoincore.org/bin/bitcoin-core-27.1/&quot;&gt;Bitcoin Core v27.1: Bug Fixes &amp;amp; Performance Improvements&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Another release of Core.&lt;/p&gt;
+
+&lt;p&gt;This release includes various bug fixes and performance improvements, as well as updated translations. Please report bugs using the issue tracker at GitHub.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://delvingbitcoin.org/t/bolt-12-trusted-contacts/1046&quot;&gt;BOLT 12 Trusted Contacts&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Recap: BOLT 12 enhances the Lightning Network by introducing reusable offers, improving privacy through onion messages, and enabling flexible, feature-rich payment mechanisms. It supports static offers for multiple payments, simplifies recurring payments like subscriptions, and allows for automated refunds and reversals. With invoice requests, users gain more control and privacy over transactions, while standardization ensures interoperability across the network, making BOLT 12 a key step towards a more versatile and user-friendly Lightning Network.&lt;/p&gt;
+
+&lt;p&gt;The proposal outlines a method to enhance the user experience on the Lightning Network by enabling trusted contacts through BOLT 12, allowing users to manage a contacts list and make payments without needing to share a new invoice each time. The approach involves generating a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;contact_key&lt;/code&gt; for mutual authentication between users, with options for distributing this key via BOLT 12 offers or BIP21 URIs. Three options for contact mutual authentication are discussed: directly using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;invreq_payer_id&lt;/code&gt;, deriving a per-contact &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;invreq_payer_id&lt;/code&gt;, or using the bLIP-31 protocol, with the second option being favored for balancing simplicity and privacy. The goal is to standardize this feature across different wallets to create a seamless payment experience.&lt;/p&gt;
+
+&lt;h4 id=&quot;antpool--bitmain-acting-as-a-pool-of-pools---report&quot;&gt;&lt;a href=&quot;https://www.nobsbitcoin.com/bitmain-antpool-pool-of-pools-report/&quot;&gt;AntPool &amp;amp; Bitmain Acting as ‘a Pool of Pools’ - Report&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;“TLDR: AntPool/Bitmain is essentially a pool of pools. This is causing mining centralization,”&lt;/p&gt;
+
+&lt;h4 id=&quot;stable-channels&quot;&gt;&lt;a href=&quot;https://stablechannels.com/&quot;&gt;Stable Channels&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;With a stable channel client, two users can rapidly settle a contract for difference so that one counterparty maintains a USD-equivalent bitcoin value so long as the other cooperates.&lt;/p&gt;
+
+&lt;h4 id=&quot;mutiny-wallet-shutting-down&quot;&gt;&lt;a href=&quot;https://blog.mutinywallet.com/mutiny-wallet-is-shutting-down/&quot;&gt;Mutiny Wallet shutting down&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;“TLDR: Our company is exploring alternative products, we’ll be shutting down the wallet at the end of the year but you can still self host.”&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/nostr-protocol/nips/blob/master/15.md&quot;&gt;NIP update - nostr marketplace (NIP-15)&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;There’s an LNBits extension that allows you to list and shop for goods using Nostr relays and get paid through Bitcoin/Lightning&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.nobsbitcoin.com/a-bitaxe-has-found-a-block/&quot;&gt;A Bitaxe Has Mined Block 853742&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A solo Bitcoin miner with 3 TH/s has mined block 853742, overcoming odds of 1 in 1.2 million and earning 3.192 BTC (approximately $200,000).&lt;/p&gt;
+
+&lt;p&gt;A Bitaxe costs ~US$440.&lt;/p&gt;</content><author><name></name></author><summary type="html">We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments. Announcements No pictures or recordings Thank you OGBC and Lnfi Network for sponsorship of the event space and pizzas Introductions Agenda P2P Economy with Lightning &amp;amp; Fiber Network - Cipher, CELL Studio Bitcoin Basics #3 - Heng Hong Industry Updates, Bitcoin Projects’ Fundraising Updates - Darius</summary></entry><entry><title type="html">Socratic Seminar 5</title><link href="/2024-08-02-socratic-seminar-5.html" rel="alternate" type="text/html" title="Socratic Seminar 5" /><published>2024-08-02T00:00:00+08:00</published><updated>2024-08-02T00:00:00+08:00</updated><id>/socratic-seminar-5</id><content type="html" xml:base="/2024-08-02-socratic-seminar-5.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+&lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;No pictures or recordings&lt;/li&gt;
+  &lt;li&gt;Thank you &lt;a href=&quot;https://www.ogbc.com/&quot;&gt;OGBC&lt;/a&gt; and &lt;a href=&quot;https://www.lnfi.network&quot;&gt;Lnfi Network&lt;/a&gt; for sponsorship of the event space and pizzas&lt;/li&gt;
+  &lt;li&gt;Introductions
+    &lt;h1 id=&quot;agenda&quot;&gt;Agenda&lt;/h1&gt;
+  &lt;/li&gt;
+  &lt;li&gt;DLC - Lucas, 10101&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1l4PO8_NkQ10fmULIWAaiHB2hoJoOf40gsz3-YTJPxaM/edit?usp=sharing&quot;&gt;Bitcoin Basics #2 - Bitcoin Transactions&lt;/a&gt; - Heng Hong&lt;/li&gt;
+  &lt;li&gt;Industry Updates, &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1k0I348eU-dEVKTTBVwfyyXozLjDCTqCPszLFGgJ7KOg/edit?usp=sharing&quot;&gt;Bitcoin Projects’ Fundraising Updates&lt;/a&gt; - Darius&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;industry-updates---bitcoin-news--releases&quot;&gt;Industry Updates - Bitcoin News &amp;amp; Releases&lt;/h1&gt;
+
+&lt;h4 id=&quot;taproot-assets-on-lightning-network&quot;&gt;&lt;a href=&quot;https://x.com/lightning/status/1815768786752164213&quot;&gt;Taproot Assets on Lightning Network&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Lightning Labs: “Announcing the first mainnet release of multi-asset Lightning.”&lt;/p&gt;
+
+&lt;p&gt;With Taproot Assets, users can make instant, low fee asset transfers, bringing trillions of stablecoin volume to Bitcoin.&lt;/p&gt;
+
+&lt;p&gt;Lightning is now the global, interoperable financial layer. 🌐&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;![Global Instant Settled Foreign Exchange&lt;/td&gt;
+      &lt;td&gt;1000](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*H6ZyZ0VqKYH5gSAPkrPVKA.gif)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;![Global Instant Settled Foreign Exchange&lt;/td&gt;
+      &lt;td&gt;1000](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*PbiDXu8a4M_F3DhFT6kOjw.gif)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&quot;disclosure-of-vulnerabilities-affecting-bitcoin-core-versions-before-021x&quot;&gt;&lt;a href=&quot;https://bitcoinops.org/en/newsletters/2024/07/05/#disclosure-of-vulnerabilities-affecting-bitcoin-core-versions-before-0-21-0&quot;&gt;Disclosure of vulnerabilities affecting Bitcoin Core versions before 0.21.x&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Antoine Poinsot posted to the Bitcoin-Dev mailing list a link to an announcement of 10 vulnerabilites affecting versions of Bitcoin Core that have been past their end-of-life for almost two years.&lt;/p&gt;
+
+&lt;p&gt;Poinsot’s announcement said additional vulnerabilities fixed in Bitcoin Core 22.0 would be announced later this month, and vulnerabilities fixed in 23.0 would follow next month. Vulnerabilities fixed in later versions will be disclosed according to Bitcoin Core’s new disclosure policy as previously discussed.&lt;/p&gt;
+
+&lt;h4 id=&quot;final-results-of-okx-consolidation-txs&quot;&gt;&lt;a href=&quot;https://x.com/mononautical/status/1799220429090951582&quot;&gt;Final results of OKX consolidation txs&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Why is there a need for consolidation for UTXO (Unspent Transaction Outputs)?&lt;/p&gt;
+
+&lt;p&gt;Consolidation refers o the process of combining multiple small UTXOs into a single or multiple large UTXOs for:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Higher fee efficiency&lt;/li&gt;
+  &lt;li&gt;Simpler management&lt;/li&gt;
+  &lt;li&gt;Faster transactions&lt;/li&gt;
+  &lt;li&gt;Optimizing blockchain space&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;OKX started a major consolidation operation at a more sensible ~53 sats/vb but since then they’ve been gradually bidding against themselves, until at a current point they’re trying to pay 350+ s/vb.&lt;/p&gt;
+
+&lt;p&gt;Total confirmed and pending OKX consolidations starting from block 846867:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2,385 transactions&lt;/li&gt;
+  &lt;li&gt;357,092 inputs&lt;/li&gt;
+  &lt;li&gt;Consumed 103 MvB&lt;/li&gt;
+  &lt;li&gt;Average fee rate of 246.65 sat/vB&lt;/li&gt;
+  &lt;li&gt;Total fees of 254.28 BTC (approx. $17.6 million)&lt;/li&gt;
+  &lt;li&gt;Recouped 1,738.26 BTC&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;OKX probably paid 5-8x what they needed to.&lt;/p&gt;
+
+&lt;h4 id=&quot;miners-keeping-list-of-compromised-addresses-to-increase-fees&quot;&gt;&lt;a href=&quot;https://x.com/mononautical/status/1800496416252743919&quot;&gt;Miners keeping list of compromised addresses to increase fees?&lt;/a&gt;&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The attacker monitors the blockchain for transactions sent to known low-entropy addresses that they suspect might be targeted by others.&lt;/li&gt;
+  &lt;li&gt;When they see funds sent to one of these addresses, they quickly create a new transaction that attempts to send those same funds to a different address (likely one they control).&lt;/li&gt;
+  &lt;li&gt;This is essentially an attempt at a double-spend. The attacker is racing against the original recipient to move the funds first.&lt;/li&gt;
+  &lt;li&gt;By attaching extremely high fees to their transaction, the attacker increases the likelihood that miners will include their transaction in the next block, potentially beating out the legitimate recipient’s attempt to move the funds.&lt;/li&gt;
+  &lt;li&gt;This attack exploits the window between when a transaction is broadcast and when it’s confirmed in a block.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Sender just lost half a bitcoin to fees after withdrawing to a compromised address.&lt;/p&gt;
+
+&lt;h4 id=&quot;concurrently-secure-blind-signatures&quot;&gt;&lt;a href=&quot;https://eprint.iacr.org/2022/1676&quot;&gt;Concurrently secure blind signatures&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;In order for a blind signing service to scale up to anything like internet scale, it must be able to service requests concurrently. The original blind signing protocol and many variants are vulnerable to an attack where the attacker opens many sessions and ends up being able to forge a signature on a chosen message.&lt;/p&gt;
+
+&lt;h4 id=&quot;silent-payments&quot;&gt;&lt;a href=&quot;https://silentpayments.xyz/docs/&quot;&gt;Silent Payments&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;Silent payments are a technique for generating addresses for a user non-interactively, which can still be detected by wallet software.&lt;/p&gt;
+
+&lt;p&gt;Silent Payments make receiving Bitcoin easier than ever while preserving your privacy.&lt;/p&gt;
+
+&lt;p&gt;Silent Payments allow you to create a single, static address to share with friends, use for donations, or post for tips without sacrificing privacy. When someone wants to send you a payment, they use the unique public key that is a part of your Silent Payment address, combine it with the public keys of the outputs they want to send and generate a unique, one-time address that looks on-chain just like any other Taproot address. The main advantages of Silent Payments are:&lt;/p&gt;
+
+&lt;p&gt;Simpler user experience: users just need to worry about a single, static address instead of the hurdles of generating new addresses for every receive.
+ Better receiver privacy: address re-use with Silent Payments is impossible, as no two senders can generate the same on-chain address.
+ Better sender privacy: receivers have no way of connecting sends from the same receiver together, providing better privacy for even the sender.
+ No server required: anyone with a wallet supporting Silent Payments can receive funds without address reuse, without communication, and without running complex infrastructure.&lt;/p&gt;
+
+&lt;h4 id=&quot;frost-updates&quot;&gt;&lt;a href=&quot;https://github.com/BlockstreamResearch/bip-frost-dkg&quot;&gt;FROST Updates&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;The FROST (Flexible Round-Optimal Schnorr Threshold) signature scheme is designed to address key challenges in cryptographic signing processes by allowing a group of participants to jointly create a Schnorr signature using a threshold scheme. Areas of application: multi-sig wallets, DeFi whereby FROST are integrated into smart contracts to manage access controls, etc.&lt;/p&gt;
+
+&lt;p&gt;ChillDKG is proposed as an enhancement to the existing PedPop DKG (Distributed Key Generation) protocol for use with FROST. Here’s what ChillDKG brings to the table:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Traditional PedPop DKG requires secure communication channels and external consensus mechanisms. ChillDKG incorporates these elements directly into the protocol, eliminating the need for external dependencies. This “batteries included” approach makes it easier to implement and deploy.&lt;/li&gt;
+  &lt;li&gt;ChillDKG provides minimal but sufficient implementations for &lt;strong&gt;secure channel communication&lt;/strong&gt; between participants. This ensures that secret shares are protected from eavesdropping and tampering.&lt;/li&gt;
+  &lt;li&gt;The protocol includes a &lt;strong&gt;built-in consensus mechanism&lt;/strong&gt; to ensure that all participants agree on the protocol’s results. This prevents scenarios where some participants might end up with invalid or inconsistent secret shares, thus avoiding catastrophic failures.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments. Announcements No pictures or recordings Thank you OGBC and Lnfi Network for sponsorship of the event space and pizzas Introductions Agenda DLC - Lucas, 10101 Bitcoin Basics #2 - Bitcoin Transactions - Heng Hong Industry Updates, Bitcoin Projects’ Fundraising Updates - Darius</summary></entry><entry><title type="html">Socratic Seminar 4</title><link href="/2024-06-28-socratic-seminar-4.html" rel="alternate" type="text/html" title="Socratic Seminar 4" /><published>2024-06-28T00:00:00+08:00</published><updated>2024-06-28T00:00:00+08:00</updated><id>/socratic-seminar-4</id><content type="html" xml:base="/2024-06-28-socratic-seminar-4.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
+&lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;No pictures or recordings&lt;/li&gt;
+  &lt;li&gt;Thank you sponsors:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;https://www.ogbc.com/&quot;&gt;OGBC&lt;/a&gt; - for the event space&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://ltng.ventures/&quot;&gt;Lightning Ventures&lt;/a&gt;  for the pizzas&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://www.apro.com/&quot;&gt;APRO Oracle&lt;/a&gt; for the happy hour at &lt;a href=&quot;https://www.joo-bar.com/&quot;&gt;Joo Bar&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Our website is up! https://bitdevs.sg/&lt;/li&gt;
+  &lt;li&gt;Introductions
+  # Agenda
+    &lt;ul&gt;
+      &lt;li&gt;Pizza + Networking&lt;/li&gt;
+      &lt;li&gt;Bitcoin Basics - &lt;a href=&quot;https://docs.google.com/presentation/d/1lH4c6VV399MZUKbOFf-UbhT_5nR4aQERH8TOu_SUaIA/edit?usp=sharing&quot;&gt;UTXO vs Account Model&lt;/a&gt;, &lt;a href=&quot;https://x.com/HengHongLee&quot;&gt;Heng Hong&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Industry Updates - Bitcoin News, Releases &amp;amp; &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1k0I348eU-dEVKTTBVwfyyXozLjDCTqCPszLFGgJ7KOg/edit?gid=0#gid=0&quot;&gt;Fundraising Updates&lt;/a&gt;, Darius&lt;/li&gt;
+      &lt;li&gt;Resistance Money - A Philosophical Case for Bitcoin, &lt;a href=&quot;https://x.com/resistancemoney&quot;&gt;Andrew Bailey&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;industry-updates---bitcoin-news--releases&quot;&gt;Industry Updates - Bitcoin News &amp;amp; Releases&lt;/h1&gt;
+
+&lt;h4 id=&quot;vulnerabilities-disclosed-for-lnd-versions-prior-to-017-and-other-denial-of-service-attacks&quot;&gt;&lt;a href=&quot;https://delvingbitcoin.org/t/estimating-likelihood-for-lightning-payments-to-be-in-feasible/973&quot;&gt;Vulnerabilities disclosed for LND versions prior to 0.17, and other Denial-of-Service attacks&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Matt Morehouse publicly disclosed DoS vulnerabilities for Lightning Network implementations after privately disclosing to Lightning Labs about a year ago.&lt;/p&gt;
+
+&lt;p&gt;DoS vulnerabilities are critical because when Lightning Nodes are taken offline, funds are at risk&lt;/p&gt;
+
+&lt;p&gt;Morehouse describes other methods of DoS attacks which affects CLN and eclair implementations too. Also does a great job highlighting the difference in how implementations handle being offline&lt;/p&gt;
+
+&lt;p&gt;As more features are added to the Lightning Network Protocol, then attack surfaces increases from the additional complexity. Encourages more awareness into security research on lightning&lt;/p&gt;
+
+&lt;h4 id=&quot;bitcoin-core-v271-bug-fixes--performance-improvements&quot;&gt;&lt;a href=&quot;https://bitcoincore.org/bin/bitcoin-core-27.1/&quot;&gt;&lt;strong&gt;Bitcoin Core v27.1: Bug Fixes &amp;amp; Performance Improvements&lt;/strong&gt;&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Another release of Core&lt;/p&gt;
+
+&lt;p&gt;“Bitcoin Core version v27.1 is now available from: https://bitcoincore.org/bin/bitcoin-core-27.1/ or through BitTorrent (magnet link),” announced the project. “This release includes various bug fixes and performance improvements, as well as updated translations. Please report bugs using the issue tracker at GitHub.”&lt;/p&gt;
+
+&lt;h4 id=&quot;bitcoin-optech-306-disclosure-of-vulnerabilities-affecting-older-versions-of-bitcoin-core&quot;&gt;&lt;a href=&quot;https://bitcoinops.org/en/newsletters/2024/06/07/&quot;&gt;Bitcoin Optech #306: Disclosure of Vulnerabilities Affecting Older Versions of Bitcoin Core&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;This issue announces an upcoming disclosure of Bitcoin Core vulnerabilities, and describes: a draft BIP for testnet4, functional encryption covenants, proposed updates to 64-bit arithmetic in Bitcoin Script, looks at OP_CAT script to validate proof of work, as well as proposed update to BIP21.&lt;/p&gt;
+
+&lt;p&gt;“Several members of the Bitcoin Core project discussed on IRC a proposed policy for disclosing vulnerabilities that affected older versions of Bitcoin Core…” “After this policy has a chance to be further discussed, it is the intention of the project to begin disclosing vulnerabilities affecting Bitcoin Core 24.x and below. It is strongly recommended that all users and administrators upgrade to Bitcoin Core 25.0 or above within the next two weeks.”&lt;/p&gt;</content><author><name></name></author><summary type="html">We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments. Announcements No pictures or recordings Thank you sponsors: OGBC - for the event space Lightning Ventures for the pizzas APRO Oracle for the happy hour at Joo Bar Our website is up! https://bitdevs.sg/ Introductions # Agenda Pizza + Networking Bitcoin Basics - UTXO vs Account Model, Heng Hong Industry Updates - Bitcoin News, Releases &amp;amp; Fundraising Updates, Darius Resistance Money - A Philosophical Case for Bitcoin, Andrew Bailey Industry Updates - Bitcoin News &amp;amp; Releases</summary></entry><entry><title type="html">Socratic Seminar 3</title><link href="/2024-05-31-socratic-seminar-3.html" rel="alternate" type="text/html" title="Socratic Seminar 3" /><published>2024-05-31T00:00:00+08:00</published><updated>2024-05-31T00:00:00+08:00</updated><id>/socratic-seminar-3</id><content type="html" xml:base="/2024-05-31-socratic-seminar-3.html">&lt;p&gt;We will start with introductions, some basic ground rules, and jump into technical discussions. We will cover aspects of the bitcoin protocol, new research developments, recent news, and software developments.&lt;/p&gt;
 &lt;h1 id=&quot;announcements&quot;&gt;Announcements&lt;/h1&gt;
 &lt;ul&gt;
   &lt;li&gt;No pictures or recordings&lt;/li&gt;
